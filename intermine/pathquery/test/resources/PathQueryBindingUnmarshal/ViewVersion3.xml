@@ -1,0 +1,4 @@
+<query name="viewsVersion3" model="testmodel">
+      <view>Company.name</view>
+      <view>Company.vatNumber</view>
+  </query>

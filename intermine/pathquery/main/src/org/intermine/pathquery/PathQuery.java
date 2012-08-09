@@ -50,7 +50,10 @@ public class PathQuery implements Cloneable
     /** A Pattern that finds spaces in a String. */
     protected static final Pattern SPACE_SPLITTER = Pattern.compile(" ", Pattern.LITERAL);
     /** Version number for the userprofile and PathQuery XML format. */
-    public static final int USERPROFILE_VERSION = 2;
+    // 1 => node (tree) based structure.
+    // 2 => Flat constraint list, removal of ':' syntax for outer-joins.
+    // 3 => View list as separate elements.
+    public static final int USERPROFILE_VERSION = 3;
 
     /** The lowest code value a constraint may be assigned. **/
     public static final char MIN_CODE = 'A';
@@ -92,6 +95,9 @@ public class PathQuery implements Cloneable
     private boolean doNotVerifyLogic = false;
 
     private static final String NO_VIEW_ERROR = "No columns selected for output";
+    
+    /** Map from view path to an aggregate function **/
+    private final Map<String, Function> aggregateFunctions;
 
     // See http://intrac.flymine.org/wiki/PathQueryRefactor
 
@@ -102,6 +108,7 @@ public class PathQuery implements Cloneable
      */
     public PathQuery(Model model) {
         this.model = model;
+        aggregateFunctions = new HashMap<String, Function>();
     }
 
     /**
@@ -121,6 +128,7 @@ public class PathQuery implements Cloneable
         outerJoinStatus = new LinkedHashMap<String, OuterJoinStatus>(o.outerJoinStatus);
         descriptions = new LinkedHashMap<String, String>(o.descriptions);
         description = o.description;
+        aggregateFunctions = new HashMap<String, Function>(o.aggregateFunctions);
     }
 
     /**
@@ -169,6 +177,7 @@ public class PathQuery implements Cloneable
                     + view + "\" - cannot remove it");
         }
         view.removeAll(Collections.singleton(viewPath));
+        aggregateFunctions.remove(viewPath);
     }
 
     /**
@@ -177,6 +186,16 @@ public class PathQuery implements Cloneable
     public synchronized void clearView() {
         deVerify();
         view.clear();
+        aggregateFunctions.clear();
+    }
+    
+    public synchronized void setAggregateFunction(String path, Function function) {
+        deVerify();
+        aggregateFunctions.put(path, function);
+    }
+    
+    public synchronized Function getAggregateFunction(String path) {
+        return aggregateFunctions.get(path);
     }
 
     /**

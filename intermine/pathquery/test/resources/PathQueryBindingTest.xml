@@ -42,6 +42,10 @@
           <value>Manager</value>
       </constraint>
   </query>
+  <query name="viewsVersion3" model="testmodel">
+      <view>Company.name</view>
+      <view>Company.vatNumber</view>
+  </query>
   
 
 </query-list>

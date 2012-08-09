@@ -51,6 +51,7 @@ public class PathQueryHandler extends DefaultHandler
                 "float", "double", "short", "int", "long", "Boolean", "Float", "Double", "Short",
                 "Integer", "Long", "BigDecimal", "Date", "String"));
     private StringBuilder valueBuffer = null;
+    private StringBuilder viewBuffer = null;
     protected String constraintPath = null;
     protected Map<String, String> constraintAttributes = null;
     protected Collection<String> constraintValues = null;
@@ -188,6 +189,8 @@ public class PathQueryHandler extends DefaultHandler
             }
         } else if ("value".equals(qName)) {
             valueBuffer = new StringBuilder();
+        } else if ("view".equals(qName)) {
+            viewBuffer = new StringBuilder();
         }
     }
 
@@ -356,7 +359,14 @@ public class PathQueryHandler extends DefaultHandler
             }
             constraintValues.add(valueBuffer.toString());
             valueBuffer = null;
+        } else if ("view".equals(qName) && version >= 3) { // Only legal in version 3+
+            if (viewBuffer == null || viewBuffer.length() < 1) {
+                throw new NullPointerException("view elements may not be empty");
+            }
+            query.addView(viewBuffer.toString());
+            viewBuffer = null;
         }
+        
     }
 
     /**
@@ -366,6 +376,8 @@ public class PathQueryHandler extends DefaultHandler
     public void characters(char[] ch, int start, int length) {
         if (valueBuffer != null) {
             valueBuffer.append(ch, start, length);
+        } else if (viewBuffer != null) {
+            viewBuffer.append(ch, start, length);
         }
     }
 

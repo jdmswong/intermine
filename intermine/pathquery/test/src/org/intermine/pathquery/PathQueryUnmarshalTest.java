@@ -81,6 +81,11 @@ public class PathQueryUnmarshalTest extends  TestCase
                 "type of Integer"), query.verifyQuery());
     }
 
+    public void testViewVersion3() {
+        PathQuery query = createQuery("ViewVersion3.xml");
+        assertEquals(Arrays.asList("Company.name", "Company.vatNumber"), query.getView());
+    }
+
     /* ? */
     public void testInvalidConstraintIdentifier() {
     }
@@ -237,7 +242,7 @@ public class PathQueryUnmarshalTest extends  TestCase
         	throw new RuntimeException("Could not find the required XML file: " + path);
         }
         Model model = Model.getInstanceByName("testmodel");
-        PathQuery ret = PathQueryBinding.unmarshalPathQueries(new InputStreamReader(is), 1).values().iterator().next();
+        PathQuery ret = PathQueryBinding.unmarshalPathQueries(new InputStreamReader(is), PathQuery.USERPROFILE_VERSION).values().iterator().next();
         return ret;
     }
 }
