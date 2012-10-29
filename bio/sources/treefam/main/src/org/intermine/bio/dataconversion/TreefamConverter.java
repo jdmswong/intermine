@@ -49,11 +49,9 @@ public class TreefamConverter extends BioFileConverter
     private Map<String, GeneHolder> idsToGenes = new HashMap<String, GeneHolder>();
     private Map<String, String> identifiersToGenes = new HashMap<String, String>();
     private Map<String, String[]> config = new HashMap<String, String[]>();
-    protected IdResolverFactory flyResolverFactory;
     private static String evidenceRefId = null;
-    protected IdResolverFactory fishResolverFactory;
-    private static final String ZFIN_TAXON = "7955";
-    private static final String FLY_TAXON = "7227";
+
+    protected IdResolver rslv;
 
     /**
      * Constructor
@@ -65,9 +63,6 @@ public class TreefamConverter extends BioFileConverter
         throws ObjectStoreException {
         super(writer, model, DATA_SOURCE_NAME, DATASET_TITLE);
         readConfig();
-        flyResolverFactory = new FlyBaseIdResolverFactory("gene");
-        fishResolverFactory = new ZfinGeneIdResolverFactory();
-
     }
 
     /**
@@ -173,18 +168,10 @@ public class TreefamConverter extends BioFileConverter
         throws ObjectStoreException {
         String identifierType = type;
         String identifier = ident;
-        if (ZFIN_TAXON.equals(taxonId) || FLY_TAXON.equals(taxonId)) {
-            IdResolverFactory idResolverFactory = null;
-            if (ZFIN_TAXON.equals(taxonId)) {
-                idResolverFactory = fishResolverFactory;
-            } else if (FLY_TAXON.equals(taxonId)) {
-                idResolverFactory = flyResolverFactory;
-            }
-            identifier = resolveGene(idResolverFactory, taxonId, identifier);
-            identifierType = "primaryIdentifier";
-            if (identifier == null) {
-                return null;
-            }
+        identifier = resolveGene(taxonId, identifier);
+        identifierType = "primaryIdentifier";
+        if (identifier == null) {
+            return null;
         }
         String refId = identifiersToGenes.get(identifier);
         if (refId == null) {
@@ -220,6 +207,19 @@ public class TreefamConverter extends BioFileConverter
         } catch (IOException err) {
             throw new RuntimeException("error reading geneFile", err);
         }
+
+        //Create id resolver
+        Set<String> allTaxonIds = new HashSet<String>() {
+            private static final long serialVersionUID = 1L;
+            {
+                addAll(taxonIds);
+                addAll(homologues);
+            }
+        };
+        if (rslv == null) {
+            rslv = IdResolverService.getIdResolverByOrganism(allTaxonIds);
+        }
+
         Iterator<String[]> lineIter = FormattedTextParser.parseTabDelimitedReader(reader);
         while (lineIter.hasNext()) {
             String[] bits = lineIter.next();
@@ -357,20 +357,18 @@ public class TreefamConverter extends BioFileConverter
         return identifier;
     }
 
-    private String resolveGene(IdResolverFactory resolverFactory, String taxonId,
-            String identifier) {
-        IdResolver resolver = resolverFactory.getIdResolver(false);
-        if (resolver == null) {
+    private String resolveGene(String taxonId, String identifier) {
+        if (rslv == null || !rslv.hasTaxon(taxonId)) {
             // no id resolver available, so return the original identifier
             return identifier;
         }
-        int resCount = resolver.countResolutions(taxonId, identifier);
+        int resCount = rslv.countResolutions(taxonId, identifier);
         if (resCount != 1) {
             LOG.info("RESOLVER: failed to resolve gene to one identifier, ignoring gene: "
                     + identifier + " count: " + resCount + " "
-                    + resolver.resolveId(taxonId, identifier));
+                    + rslv.resolveId(taxonId, identifier));
             return null;
         }
-        return resolver.resolveId(taxonId, identifier).iterator().next();
+        return rslv.resolveId(taxonId, identifier).iterator().next();
     }
 }

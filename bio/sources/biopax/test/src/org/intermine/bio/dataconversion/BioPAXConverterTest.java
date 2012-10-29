@@ -45,6 +45,7 @@ public class BioPAXConverterTest extends MockItemsTestCase
      *
      * @throws Exception
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testProcess() throws Exception {
         if (processDmel) {
             TEST_FILE = "83333.owl";
@@ -66,7 +67,7 @@ public class BioPAXConverterTest extends MockItemsTestCase
         converter.close();
 
         // uncomment to write out a new target items file
-        writeItemsFile(itemWriter.getItems(), "BioPAX-tgt-items.xml");
+        //writeItemsFile(itemWriter.getItems(), "BioPAX-tgt-items.xml");
 
         Set<Item> expected = readItemSet("BioPAXConverterTest_tgt.xml");
 

@@ -25,7 +25,6 @@ import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.intermine.bio.util.OrganismData;
 import org.intermine.bio.util.OrganismRepository;
 import org.intermine.dataconversion.ItemWriter;
 import org.intermine.metadata.Model;
@@ -38,7 +37,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
 
 /**
  * DataConverter to parse UniProt data into items.  Improved version of UniProtConverter.
@@ -64,7 +62,6 @@ public class UniprotConverter extends BioDirectoryConverter
     private Map<String, String> goterms = new HashMap<String, String>();
     private Map<String, String> goEvidenceCodes = new HashMap<String, String>();
     private Map<String, String> ecNumbers = new HashMap<String, String>();
-    private static final String GENUS_LOOKUP = "Drosophila";
     private static final int POSTGRES_INDEX_SIZE = 2712;
 
     // don't allow duplicate identifiers
@@ -77,8 +74,10 @@ public class UniprotConverter extends BioDirectoryConverter
     private boolean loadtrembl = true;
     private Set<String> taxonIds = null;
 
-    protected IdResolverFactory flyResolverFactory;
+    protected IdResolver rslv;
+    private static final String FLY = "7227";
     private String datasourceRefId = null;
+    @SuppressWarnings("unused")
     private OrganismRepository or;
     private static final Map<String, String> GENE_PREFIXES = new HashMap<String, String>();
 
@@ -89,8 +88,6 @@ public class UniprotConverter extends BioDirectoryConverter
      */
     public UniprotConverter(ItemWriter writer, Model model) {
         super(writer, model, "UniProt", "Swiss-Prot data set");
-        // only construct factory here so can be replaced by mock factory in tests
-        flyResolverFactory = new FlyBaseIdResolverFactory("gene");
         or = OrganismRepository.getOrganismRepository();
     }
 
@@ -112,6 +109,11 @@ public class UniprotConverter extends BioDirectoryConverter
             throw new RuntimeException(e);
         }
         Map<String, File[]> taxonIdToFiles = parseFileNames(dataDir.listFiles());
+
+        // init id resolver
+        if (rslv == null) {
+            rslv = IdResolverService.getIdResolverByOrganism(FLY);
+        }
 
         if (taxonIds != null) {
             for (String taxonId : taxonIds) {
@@ -1084,27 +1086,25 @@ public class UniprotConverter extends BioDirectoryConverter
         }
 
         private String resolveGene(String taxId, String identifier) {
-            OrganismData od = or.getOrganismDataByTaxon(new Integer(taxId));
-            if (od != null && od.getGenus().equals(GENUS_LOOKUP) && flyResolverFactory != null) {
+            if (FLY.equals(taxId)) {
                 return resolveFlyGene(taxId, identifier);
             }
             return identifier;
         }
 
         private String resolveFlyGene(String taxId, String identifier) {
-            IdResolver flyResolver = flyResolverFactory.getIdResolver(false);
-            if (flyResolver == null) {
+            if (rslv == null || !rslv.hasTaxon(taxId)) {
                 // no id resolver available, so return the original identifier
                 return identifier;
             }
-            int resCount = flyResolver.countResolutions(taxId, identifier);
+            int resCount = rslv.countResolutions(taxId, identifier);
             if (resCount != 1) {
                 LOG.info("RESOLVER: failed to resolve gene to one identifier, ignoring gene: "
                          + identifier + " count: " + resCount + " FBgn: "
-                         + flyResolver.resolveId(taxId, identifier));
+                         + rslv.resolveId(taxId, identifier));
                 return null;
             }
-            return flyResolver.resolveId(taxId, identifier).iterator().next();
+            return rslv.resolveId(taxId, identifier).iterator().next();
         }
     }
 
