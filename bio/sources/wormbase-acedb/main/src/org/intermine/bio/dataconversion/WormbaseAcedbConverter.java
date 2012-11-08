@@ -24,8 +24,8 @@ import org.intermine.xml.full.Item;
 public class WormbaseAcedbConverter extends BioFileConverter
 {
     //
-    private static final String DATASET_TITLE = "Add DataSet.title here";
-    private static final String DATA_SOURCE_NAME = "Add DataSource.name here";
+    private static final String DATASET_TITLE = "wormbaseAcedb"; //"Add DataSet.title here";
+    private static final String DATA_SOURCE_NAME = "wormbaseAcedbFileconverter"; //"Add DataSource.name here";
 
     /**
      * Constructor
@@ -33,7 +33,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
      * @param model the Model
      */
     public WormbaseAcedbConverter(ItemWriter writer, Model model) {
-        super(writer, model, DATA_SOURCE_NAME, DATASET_TITLE);
+        //super(writer, model, DATA_SOURCE_NAME, DATASET_TITLE);
     }
 
     /**
@@ -42,6 +42,10 @@ public class WormbaseAcedbConverter extends BioFileConverter
      * {@inheritDoc}
      */
     public void process(Reader reader) throws Exception {
-
+    	
+    }
+    
+    public String test(){
+    	return DATASET_TITLE;
     }
 }
