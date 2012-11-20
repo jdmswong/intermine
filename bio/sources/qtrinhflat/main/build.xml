@@ -1,0 +1,4 @@
+<project name="qtrinhflat-tasks" default="default" basedir=".">
+  <description>build qtrinhflat tasks</description>
+  <import file="../../../../imbuild/library.xml"/> 
+</project>
