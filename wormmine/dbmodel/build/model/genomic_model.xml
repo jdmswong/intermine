@@ -40,6 +40,14 @@
 </class>
 <class name="Primer" extends="Oligo" is-interface="true"></class>
 <class name="ChromosomalTranslocation" extends="ChromosomeStructureVariation" is-interface="true"></class>
+<class name="QTSNP" is-interface="true">
+	<attribute name="chr" type="java.lang.String"/>
+	<attribute name="start" type="java.lang.String"/>
+	<attribute name="end" type="java.lang.String"/>
+	<attribute name="change" type="java.lang.String"/>
+	<attribute name="qtsnpidentifier" type="java.lang.String"/>
+	<reference name="sample" referenced-type="QTSample" reverse-reference="qtsnvs"/>
+</class>
 <class name="Enhancer" extends="CRM" is-interface="true"></class>
 <class name="RRNA" extends="NcRNA" is-interface="true"></class>
 <class name="ChromosomalInversion" extends="ChromosomeStructureVariation" is-interface="true"></class>
@@ -161,6 +169,11 @@
 	<reference name="gene" referenced-type="Gene" reverse-reference="CDSs"/>
 	<reference name="transcript" referenced-type="Transcript" reverse-reference="CDSs"/>
 	<reference name="protein" referenced-type="Protein" reverse-reference="CDSs"/>
+</class>
+<class name="QTSample" is-interface="true">
+	<attribute name="sidentifier" type="java.lang.String"/>
+	<attribute name="description" type="java.lang.String"/>
+	<collection name="qtsnvs" referenced-type="QTSNP" reverse-reference="sample"/>
 </class>
 <class name="Publication" is-interface="true">
 	<attribute name="pages" type="java.lang.String"/>

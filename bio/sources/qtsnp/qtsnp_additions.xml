@@ -8,6 +8,7 @@
 		<attribute name="start" type="java.lang.String"/>
 		<attribute name="end" type="java.lang.String"/>
 		<attribute name="change" type="java.lang.String"/>
-		<reference name="sample" referenced-type="QTSample" reverse-reference="qtsnvs"/>
+		
+		
 	</class>
 </classes>
