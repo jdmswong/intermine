@@ -1,0 +1,4 @@
+<project name="jdsample-tasks" default="default" basedir=".">
+  <description>build jdsample tasks</description>
+  <import file="../../../../imbuild/library.xml"/> 
+</project>
