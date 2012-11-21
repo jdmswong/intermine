@@ -33,7 +33,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
      * @param model the Model
      */
     public WormbaseAcedbConverter(ItemWriter writer, Model model) {
-        //super(writer, model, DATA_SOURCE_NAME, DATASET_TITLE);
+        super(writer, model, DATA_SOURCE_NAME, DATASET_TITLE);
     }
 
     /**
@@ -42,7 +42,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
      * {@inheritDoc}
      */
     public void process(Reader reader) throws Exception {
-    	
+    	System.out.println("JDJDJD::started fileconverter process()");
     }
     
     public String test(){
