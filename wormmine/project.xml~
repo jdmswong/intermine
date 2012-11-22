@@ -16,8 +16,8 @@
 	  </source>-->
 	  
 	  <source name="wb_acedb" type="wormbase-acedb">
-		  <property name="src.data.dir" 
-			location="/home/jdmswong/website-intermine/intermine/datadir/wormbase-acedb" />
+		  <!--<property name="src.data.dir" 
+			location="/home/jdmswong/website-intermine/intermine/datadir/qtsnps" />-->
 	  </source>
 
   </sources>
