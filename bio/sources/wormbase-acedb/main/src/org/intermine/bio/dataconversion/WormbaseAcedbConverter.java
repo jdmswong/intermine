@@ -38,12 +38,11 @@ public class WormbaseAcedbConverter extends BioFileConverter
 
     /**
      * 
-     *
+     * @param reader The java.io.BufferedReader that intermine passes in
      * {@inheritDoc}
      */
     public void process(Reader reader) throws Exception {
-    	System.out.println("JDJDJD:: started WormbaseAcedbConterter.process()");
-    	//System.out.println(reader.getClass().getName());
-    	//ModelParser mp = new ModelParser(reader);
+    	System.out.println("JDJDJD:: started WormbaseAcedbConverter.process()");
+    	ModelParser mp = new ModelParser(reader);
     }
 }
