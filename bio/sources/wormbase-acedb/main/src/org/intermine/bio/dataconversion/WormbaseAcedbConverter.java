@@ -42,6 +42,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
      * {@inheritDoc}
      */
     public void process(Reader reader) throws Exception {
-
+    	System.out.println("JDJDJD:: started WormbaseAcedbConterter.process()");
+    	ModelParser mp = new ModelParser(reader);
     }
 }

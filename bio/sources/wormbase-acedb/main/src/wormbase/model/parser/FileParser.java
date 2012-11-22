@@ -30,10 +30,14 @@ public class FileParser {
 	 * @throws IOException 
 	 */
 	public FileParser(String jaceFile) throws IOException {
-        
-		inputStream = new MyBufferedReader(new FileReader(jaceFile));
-
+ 		inputStream = new MyBufferedReader(new FileReader(jaceFile));
 	}
+	
+	public FileParser(Reader reader) throws IOException {
+ 		inputStream = new MyBufferedReader(reader);
+	}
+	
+	
 	
 	/**
 	 * Returns multiline chunks of text separated by newlines.
