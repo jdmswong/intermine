@@ -1,6 +1,4 @@
 /**
- * My wrapper for the BufferedReader class that won't throw an
- * exception when tested for closed status.
  */
 package wormbase.model.parser;
 
@@ -11,6 +9,8 @@ import java.io.Reader;
 
 /**
  * @author jwong
+ * A wrapper for the BufferedReader class designedh to now
+ * throw an exception when tested for closed status.
  *
  */
 public class MyBufferedReader extends BufferedReader {
