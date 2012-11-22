@@ -16,7 +16,7 @@ import org.intermine.dataconversion.ItemWriter;
 import org.intermine.metadata.Model;
 import org.intermine.xml.full.Item;
 
-
+import wormbase.model.parser.*;
 /**
  * 
  * @author
