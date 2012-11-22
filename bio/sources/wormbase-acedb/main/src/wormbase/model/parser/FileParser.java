@@ -57,7 +57,7 @@ public class FileParser {
         try {
 			while ((line = (String) inputStream.readLine()) != null) {
 			    
-			    System.out.print("*") // DEBUG
+			    System.out.print("*"); // DEBUG
 			    
 			    if(line.equals("")){
 			    	if(startedObj){
