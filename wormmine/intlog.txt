@@ -46,7 +46,7 @@ library.-init-deps:
 [dependencies]  bio/core/main
 [dependencies]  wormmine/dbmodel
 [dependencies] ---------------------------------------------------
-[dependencies] Wed Nov 21 14:39:59 EST 2012
+[dependencies] Thu Nov 22 14:24:37 EST 2012
 [dependencies] Executing "jar" for source "intermine/objectstore/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/objectstore/main
 Detected Java version: 1.6 in: /usr/lib/jvm/java-6-sun-1.6.0.26/jre
 Detected OS: Linux
@@ -751,7 +751,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/objectstore/main/build.xml.
-[dependencies] Wed Nov 21 14:40:00 EST 2012
+[dependencies] Thu Nov 22 14:24:38 EST 2012
 [dependencies] Executing "jar" for source "intermine/integrate/model/fulldata"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/integrate/model/fulldata
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -959,7 +959,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/integrate/model/fulldata/build.xml.
-[dependencies] Wed Nov 21 14:40:01 EST 2012
+[dependencies] Thu Nov 22 14:24:39 EST 2012
 [dependencies] Executing "jar" for source "intermine/integrate/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/integrate/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -1242,7 +1242,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/integrate/main/build.xml.
-[dependencies] Wed Nov 21 14:40:01 EST 2012
+[dependencies] Thu Nov 22 14:24:39 EST 2012
 [dependencies] Executing "jar" for source "intermine/api/model/userprofile"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/api/model/userprofile
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -1454,7 +1454,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/api/model/userprofile/build.xml.
-[dependencies] Wed Nov 21 14:40:02 EST 2012
+[dependencies] Thu Nov 22 14:24:39 EST 2012
 [dependencies] Executing "jar" for source "intermine/pathquery/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/pathquery/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -1681,7 +1681,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/pathquery/main/build.xml.
-[dependencies] Wed Nov 21 14:40:02 EST 2012
+[dependencies] Thu Nov 22 14:24:40 EST 2012
 [dependencies] Executing "jar" for source "intermine/webservice/client/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/webservice/client/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -1939,7 +1939,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/webservice/client/main/build.xml.
-[dependencies] Wed Nov 21 14:40:03 EST 2012
+[dependencies] Thu Nov 22 14:24:40 EST 2012
 [dependencies] Executing "jar" for source "intermine/api/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/api/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -2480,7 +2480,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/api/main/build.xml.
-[dependencies] Wed Nov 21 14:40:03 EST 2012
+[dependencies] Thu Nov 22 14:24:40 EST 2012
 [dependencies] Executing "jar" for source "bio/core/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../bio/core/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -2744,7 +2744,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/bio/core/main/build.xml.
-[dependencies] Wed Nov 21 14:40:03 EST 2012
+[dependencies] Thu Nov 22 14:24:41 EST 2012
 [dependencies] Executing "jar" for source "wormmine/dbmodel"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../wormmine/dbmodel
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -2859,6 +2859,9 @@ library.-init-generate:
 -pre-define-task-classpath:
     [mkdir] Skipping /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/main because it already exists.
    [delete] Deleting directory /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/tmp
+   [delete] Deleting /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/tmp/schema2814952785104739630xml.sql
+   [delete] Deleting /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/tmp/report.sql.generation
+   [delete] Deleting /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/tmp/sqldb.map
    [delete] Deleting directory /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/tmp
     [mkdir] Created dir: /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/tmp
      [copy] /home/jdmswong/website-intermine/intermine/imbuild/task.log4j.properties omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/main/log4j.properties is up to date.
@@ -2927,17 +2930,22 @@ Skipped because property 'have.intermine.properties.file' set.
 
 -pre-generate-retrieve:
      [echo] Retrieving model from os.production...
-[dependencies] Not writing "genomic_keyDefs.properties" as version in database is identical to local copy
 [dependencies] Model in database is identical to local model.
+[outofdate] SourceFile /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/model/genomic_model.xml outofdate with regard to /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes/genomic_model.xml
 
 -pre-generate-properties:
-     [copy] /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/model/genomic_model.xml omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes/genomic_model.xml is up to date.
+     [copy] Copying 1 file to /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes
+     [copy] Copying /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/model/genomic_model.xml to /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes/genomic_model.xml
 
 -pre-generate:
-     [copy] genomic_keyDefs.properties omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes/genomic_keyDefs.properties is up to date.
-     [copy] genomic_precompute.properties omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes/genomic_precompute.properties is up to date.
-     [copy] genomic_priorities.properties omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes/genomic_priorities.properties is up to date.
+     [copy] genomic_keyDefs.properties added as genomic_keyDefs.properties doesn't exist.
+     [copy] genomic_precompute.properties added as genomic_precompute.properties doesn't exist.
+     [copy] genomic_priorities.properties added as genomic_priorities.properties doesn't exist.
      [copy] No sources found.
+     [copy] Copying 3 files to /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes
+     [copy] Copying /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/resources/genomic_precompute.properties to /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes/genomic_precompute.properties
+     [copy] Copying /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/resources/genomic_keyDefs.properties to /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes/genomic_keyDefs.properties
+     [copy] Copying /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/resources/genomic_priorities.properties to /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build/classes/genomic_priorities.properties
 
 build-model-from-xml-in-build-dir:
      [echo] Found xml file in /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build
@@ -3268,7 +3276,7 @@ do-compile:
 compile:
 
 -init-jar:
-    [mkdir] Skipping /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist because it already exists.
+    [mkdir] Created dir: /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist
 
 -pre-jar:
 
@@ -3276,149 +3284,6 @@ compile:
 [presetdef] defining preset http://www.intermine.org/ns/im-lib-proj/1:jar
 
 do-jar:
-  [lib:jar] .gitignore omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist/wormmine-dbmodel.jar:.gitignore is up to date.
-  [lib:jar] genomic_keyDefs.properties omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist/wormmine-dbmodel.jar:genomic_keyDefs.properties is up to date.
-  [lib:jar] genomic_model.xml omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist/wormmine-dbmodel.jar:genomic_model.xml is up to date.
-  [lib:jar] genomic_precompute.properties omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist/wormmine-dbmodel.jar:genomic_precompute.properties is up to date.
-  [lib:jar] genomic_priorities.properties omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist/wormmine-dbmodel.jar:genomic_priorities.properties is up to date.
-  [lib:jar] org/intermine/model/bio/Allele.class added as org/intermine/model/bio/Allele.class is outdated.
-  [lib:jar] org/intermine/model/bio/AlleleShadow.class added as org/intermine/model/bio/AlleleShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Author.class added as org/intermine/model/bio/Author.class is outdated.
-  [lib:jar] org/intermine/model/bio/AuthorShadow.class added as org/intermine/model/bio/AuthorShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/BindingSite.class added as org/intermine/model/bio/BindingSite.class is outdated.
-  [lib:jar] org/intermine/model/bio/BindingSiteShadow.class added as org/intermine/model/bio/BindingSiteShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/BioEntity.class added as org/intermine/model/bio/BioEntity.class is outdated.
-  [lib:jar] org/intermine/model/bio/BioEntityShadow.class added as org/intermine/model/bio/BioEntityShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/CDNAClone.class added as org/intermine/model/bio/CDNAClone.class is outdated.
-  [lib:jar] org/intermine/model/bio/CDNACloneShadow.class added as org/intermine/model/bio/CDNACloneShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/CDS.class added as org/intermine/model/bio/CDS.class is outdated.
-  [lib:jar] org/intermine/model/bio/CDSShadow.class added as org/intermine/model/bio/CDSShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/CRM.class added as org/intermine/model/bio/CRM.class is outdated.
-  [lib:jar] org/intermine/model/bio/CRMShadow.class added as org/intermine/model/bio/CRMShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomalDeletion.class added as org/intermine/model/bio/ChromosomalDeletion.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomalDeletionShadow.class added as org/intermine/model/bio/ChromosomalDeletionShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomalDuplication.class added as org/intermine/model/bio/ChromosomalDuplication.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomalDuplicationShadow.class added as org/intermine/model/bio/ChromosomalDuplicationShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomalInversion.class added as org/intermine/model/bio/ChromosomalInversion.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomalInversionShadow.class added as org/intermine/model/bio/ChromosomalInversionShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomalTranslocation.class added as org/intermine/model/bio/ChromosomalTranslocation.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomalTranslocationShadow.class added as org/intermine/model/bio/ChromosomalTranslocationShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomalTransposition.class added as org/intermine/model/bio/ChromosomalTransposition.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomalTranspositionShadow.class added as org/intermine/model/bio/ChromosomalTranspositionShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Chromosome.class added as org/intermine/model/bio/Chromosome.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomeBand.class added as org/intermine/model/bio/ChromosomeBand.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomeBandShadow.class added as org/intermine/model/bio/ChromosomeBandShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomeShadow.class added as org/intermine/model/bio/ChromosomeShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomeStructureVariation.class added as org/intermine/model/bio/ChromosomeStructureVariation.class is outdated.
-  [lib:jar] org/intermine/model/bio/ChromosomeStructureVariationShadow.class added as org/intermine/model/bio/ChromosomeStructureVariationShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Comment.class added as org/intermine/model/bio/Comment.class is outdated.
-  [lib:jar] org/intermine/model/bio/CommentShadow.class added as org/intermine/model/bio/CommentShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/CrossReference.class added as org/intermine/model/bio/CrossReference.class is outdated.
-  [lib:jar] org/intermine/model/bio/CrossReferenceShadow.class added as org/intermine/model/bio/CrossReferenceShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/DataSet.class added as org/intermine/model/bio/DataSet.class is outdated.
-  [lib:jar] org/intermine/model/bio/DataSetShadow.class added as org/intermine/model/bio/DataSetShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/DataSource.class added as org/intermine/model/bio/DataSource.class is outdated.
-  [lib:jar] org/intermine/model/bio/DataSourceShadow.class added as org/intermine/model/bio/DataSourceShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/EST.class added as org/intermine/model/bio/EST.class is outdated.
-  [lib:jar] org/intermine/model/bio/ESTShadow.class added as org/intermine/model/bio/ESTShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Enhancer.class added as org/intermine/model/bio/Enhancer.class is outdated.
-  [lib:jar] org/intermine/model/bio/EnhancerShadow.class added as org/intermine/model/bio/EnhancerShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Exon.class added as org/intermine/model/bio/Exon.class is outdated.
-  [lib:jar] org/intermine/model/bio/ExonShadow.class added as org/intermine/model/bio/ExonShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/FivePrimeUTR.class added as org/intermine/model/bio/FivePrimeUTR.class is outdated.
-  [lib:jar] org/intermine/model/bio/FivePrimeUTRShadow.class added as org/intermine/model/bio/FivePrimeUTRShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/ForwardPrimer.class added as org/intermine/model/bio/ForwardPrimer.class is outdated.
-  [lib:jar] org/intermine/model/bio/ForwardPrimerShadow.class added as org/intermine/model/bio/ForwardPrimerShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Gene.class added as org/intermine/model/bio/Gene.class is outdated.
-  [lib:jar] org/intermine/model/bio/GeneFlankingRegion.class added as org/intermine/model/bio/GeneFlankingRegion.class is outdated.
-  [lib:jar] org/intermine/model/bio/GeneFlankingRegionShadow.class added as org/intermine/model/bio/GeneFlankingRegionShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/GeneShadow.class added as org/intermine/model/bio/GeneShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/GoldenPathFragment.class added as org/intermine/model/bio/GoldenPathFragment.class is outdated.
-  [lib:jar] org/intermine/model/bio/GoldenPathFragmentShadow.class added as org/intermine/model/bio/GoldenPathFragmentShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/IntergenicRegion.class added as org/intermine/model/bio/IntergenicRegion.class is outdated.
-  [lib:jar] org/intermine/model/bio/IntergenicRegionShadow.class added as org/intermine/model/bio/IntergenicRegionShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Intron.class added as org/intermine/model/bio/Intron.class is outdated.
-  [lib:jar] org/intermine/model/bio/IntronShadow.class added as org/intermine/model/bio/IntronShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Location.class added as org/intermine/model/bio/Location.class is outdated.
-  [lib:jar] org/intermine/model/bio/LocationShadow.class added as org/intermine/model/bio/LocationShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/MRNA.class added as org/intermine/model/bio/MRNA.class is outdated.
-  [lib:jar] org/intermine/model/bio/MRNAShadow.class added as org/intermine/model/bio/MRNAShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/MeshTerm.class added as org/intermine/model/bio/MeshTerm.class is outdated.
-  [lib:jar] org/intermine/model/bio/MeshTermShadow.class added as org/intermine/model/bio/MeshTermShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/MiRNA.class added as org/intermine/model/bio/MiRNA.class is outdated.
-  [lib:jar] org/intermine/model/bio/MiRNAShadow.class added as org/intermine/model/bio/MiRNAShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/MicroarrayOligo.class added as org/intermine/model/bio/MicroarrayOligo.class is outdated.
-  [lib:jar] org/intermine/model/bio/MicroarrayOligoShadow.class added as org/intermine/model/bio/MicroarrayOligoShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/NaturalTransposableElement.class added as org/intermine/model/bio/NaturalTransposableElement.class is outdated.
-  [lib:jar] org/intermine/model/bio/NaturalTransposableElementShadow.class added as org/intermine/model/bio/NaturalTransposableElementShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/NcRNA.class added as org/intermine/model/bio/NcRNA.class is outdated.
-  [lib:jar] org/intermine/model/bio/NcRNAShadow.class added as org/intermine/model/bio/NcRNAShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Oligo.class added as org/intermine/model/bio/Oligo.class is outdated.
-  [lib:jar] org/intermine/model/bio/OligoShadow.class added as org/intermine/model/bio/OligoShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Ontology.class added as org/intermine/model/bio/Ontology.class is outdated.
-  [lib:jar] org/intermine/model/bio/OntologyAnnotation.class added as org/intermine/model/bio/OntologyAnnotation.class is outdated.
-  [lib:jar] org/intermine/model/bio/OntologyAnnotationShadow.class added as org/intermine/model/bio/OntologyAnnotationShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/OntologyRelation.class added as org/intermine/model/bio/OntologyRelation.class is outdated.
-  [lib:jar] org/intermine/model/bio/OntologyRelationShadow.class added as org/intermine/model/bio/OntologyRelationShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/OntologyShadow.class added as org/intermine/model/bio/OntologyShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/OntologyTerm.class added as org/intermine/model/bio/OntologyTerm.class is outdated.
-  [lib:jar] org/intermine/model/bio/OntologyTermShadow.class added as org/intermine/model/bio/OntologyTermShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/OntologyTermSynonym.class added as org/intermine/model/bio/OntologyTermSynonym.class is outdated.
-  [lib:jar] org/intermine/model/bio/OntologyTermSynonymShadow.class added as org/intermine/model/bio/OntologyTermSynonymShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Organism.class added as org/intermine/model/bio/Organism.class is outdated.
-  [lib:jar] org/intermine/model/bio/OrganismShadow.class added as org/intermine/model/bio/OrganismShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/OverlappingESTSet.class added as org/intermine/model/bio/OverlappingESTSet.class is outdated.
-  [lib:jar] org/intermine/model/bio/OverlappingESTSetShadow.class added as org/intermine/model/bio/OverlappingESTSetShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/PCRProduct.class added as org/intermine/model/bio/PCRProduct.class is outdated.
-  [lib:jar] org/intermine/model/bio/PCRProductShadow.class added as org/intermine/model/bio/PCRProductShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/PointMutation.class added as org/intermine/model/bio/PointMutation.class is outdated.
-  [lib:jar] org/intermine/model/bio/PointMutationShadow.class added as org/intermine/model/bio/PointMutationShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Primer.class added as org/intermine/model/bio/Primer.class is outdated.
-  [lib:jar] org/intermine/model/bio/PrimerShadow.class added as org/intermine/model/bio/PrimerShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Protein.class added as org/intermine/model/bio/Protein.class is outdated.
-  [lib:jar] org/intermine/model/bio/ProteinShadow.class added as org/intermine/model/bio/ProteinShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Publication.class added as org/intermine/model/bio/Publication.class is outdated.
-  [lib:jar] org/intermine/model/bio/PublicationShadow.class added as org/intermine/model/bio/PublicationShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/RRNA.class added as org/intermine/model/bio/RRNA.class is outdated.
-  [lib:jar] org/intermine/model/bio/RRNAShadow.class added as org/intermine/model/bio/RRNAShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/RegulatoryRegion.class added as org/intermine/model/bio/RegulatoryRegion.class is outdated.
-  [lib:jar] org/intermine/model/bio/RegulatoryRegionShadow.class added as org/intermine/model/bio/RegulatoryRegionShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/ReversePrimer.class added as org/intermine/model/bio/ReversePrimer.class is outdated.
-  [lib:jar] org/intermine/model/bio/ReversePrimerShadow.class added as org/intermine/model/bio/ReversePrimerShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/SOTerm.class added as org/intermine/model/bio/SOTerm.class is outdated.
-  [lib:jar] org/intermine/model/bio/SOTermShadow.class added as org/intermine/model/bio/SOTermShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Sequence.class added as org/intermine/model/bio/Sequence.class is outdated.
-  [lib:jar] org/intermine/model/bio/SequenceCollection.class added as org/intermine/model/bio/SequenceCollection.class is outdated.
-  [lib:jar] org/intermine/model/bio/SequenceCollectionShadow.class added as org/intermine/model/bio/SequenceCollectionShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/SequenceFeature.class added as org/intermine/model/bio/SequenceFeature.class is outdated.
-  [lib:jar] org/intermine/model/bio/SequenceFeatureShadow.class added as org/intermine/model/bio/SequenceFeatureShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/SequenceShadow.class added as org/intermine/model/bio/SequenceShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/SequenceVariant.class added as org/intermine/model/bio/SequenceVariant.class is outdated.
-  [lib:jar] org/intermine/model/bio/SequenceVariantShadow.class added as org/intermine/model/bio/SequenceVariantShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/SnRNA.class added as org/intermine/model/bio/SnRNA.class is outdated.
-  [lib:jar] org/intermine/model/bio/SnRNAShadow.class added as org/intermine/model/bio/SnRNAShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/SnoRNA.class added as org/intermine/model/bio/SnoRNA.class is outdated.
-  [lib:jar] org/intermine/model/bio/SnoRNAShadow.class added as org/intermine/model/bio/SnoRNAShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Synonym.class added as org/intermine/model/bio/Synonym.class is outdated.
-  [lib:jar] org/intermine/model/bio/SynonymShadow.class added as org/intermine/model/bio/SynonymShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/TFBindingSite.class added as org/intermine/model/bio/TFBindingSite.class is outdated.
-  [lib:jar] org/intermine/model/bio/TFBindingSiteShadow.class added as org/intermine/model/bio/TFBindingSiteShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/TRNA.class added as org/intermine/model/bio/TRNA.class is outdated.
-  [lib:jar] org/intermine/model/bio/TRNAShadow.class added as org/intermine/model/bio/TRNAShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/ThreePrimeUTR.class added as org/intermine/model/bio/ThreePrimeUTR.class is outdated.
-  [lib:jar] org/intermine/model/bio/ThreePrimeUTRShadow.class added as org/intermine/model/bio/ThreePrimeUTRShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/Transcript.class added as org/intermine/model/bio/Transcript.class is outdated.
-  [lib:jar] org/intermine/model/bio/TranscriptShadow.class added as org/intermine/model/bio/TranscriptShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/TransposableElement.class added as org/intermine/model/bio/TransposableElement.class is outdated.
-  [lib:jar] org/intermine/model/bio/TransposableElementInsertionSite.class added as org/intermine/model/bio/TransposableElementInsertionSite.class is outdated.
-  [lib:jar] org/intermine/model/bio/TransposableElementInsertionSiteShadow.class added as org/intermine/model/bio/TransposableElementInsertionSiteShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/TransposableElementShadow.class added as org/intermine/model/bio/TransposableElementShadow.class is outdated.
-  [lib:jar] org/intermine/model/bio/UTR.class added as org/intermine/model/bio/UTR.class is outdated.
-  [lib:jar] org/intermine/model/bio/UTRShadow.class added as org/intermine/model/bio/UTRShadow.class is outdated.
-  [lib:jar] org omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist/wormmine-dbmodel.jar:org/ is up to date.
-  [lib:jar] org/intermine omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist/wormmine-dbmodel.jar:org/intermine/ is up to date.
-  [lib:jar] org/intermine/model omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist/wormmine-dbmodel.jar:org/intermine/model/ is up to date.
-  [lib:jar] org/intermine/model/bio omitted as /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist/wormmine-dbmodel.jar:org/intermine/model/bio/ is up to date.
   [lib:jar] Building jar: /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/dist/wormmine-dbmodel.jar
   [lib:jar] adding directory META-INF/
   [lib:jar] adding entry META-INF/MANIFEST.MF
@@ -3795,9 +3660,6 @@ Skipped because property 'release' not set.
 -pre-define-task-classpath:
     [mkdir] Skipping /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/main because it already exists.
    [delete] Deleting directory /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp
-   [delete] Deleting /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp/report.sql.generation
-   [delete] Deleting /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp/schema8286487635399296992xml.sql
-   [delete] Deleting /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp/sqldb.map
    [delete] Deleting directory /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp
     [mkdir] Created dir: /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp
      [copy] /home/jdmswong/website-intermine/intermine/imbuild/task.log4j.properties omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/main/log4j.properties is up to date.
@@ -3836,7 +3698,7 @@ library.-init-deps:
 [integrate]  wormmine/dbmodel
 [integrate]  bio/sources/wormbase-acedb/main
 [integrate] ---------------------------------------------------
-[integrate] Wed Nov 21 14:40:08 EST 2012
+[integrate] Thu Nov 22 14:24:46 EST 2012
 [integrate] Executing "jar" for source "intermine/objectstore/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/objectstore/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -4544,7 +4406,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/objectstore/main/build.xml.
-[integrate] Wed Nov 21 14:40:09 EST 2012
+[integrate] Thu Nov 22 14:24:46 EST 2012
 [integrate] Executing "jar" for source "intermine/integrate/model/fulldata"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/integrate/model/fulldata
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -4774,7 +4636,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/integrate/model/fulldata/build.xml.
-[integrate] Wed Nov 21 14:40:09 EST 2012
+[integrate] Thu Nov 22 14:24:47 EST 2012
 [integrate] Executing "jar" for source "intermine/integrate/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/integrate/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -5058,7 +4920,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/integrate/main/build.xml.
-[integrate] Wed Nov 21 14:40:10 EST 2012
+[integrate] Thu Nov 22 14:24:47 EST 2012
 [integrate] Executing "jar" for source "intermine/api/model/userprofile"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/api/model/userprofile
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -5292,7 +5154,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/api/model/userprofile/build.xml.
-[integrate] Wed Nov 21 14:40:10 EST 2012
+[integrate] Thu Nov 22 14:24:48 EST 2012
 [integrate] Executing "jar" for source "intermine/pathquery/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/pathquery/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -5520,7 +5382,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/pathquery/main/build.xml.
-[integrate] Wed Nov 21 14:40:10 EST 2012
+[integrate] Thu Nov 22 14:24:48 EST 2012
 [integrate] Executing "jar" for source "intermine/webservice/client/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/webservice/client/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -5779,7 +5641,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/webservice/client/main/build.xml.
-[integrate] Wed Nov 21 14:40:11 EST 2012
+[integrate] Thu Nov 22 14:24:48 EST 2012
 [integrate] Executing "jar" for source "intermine/api/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/api/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -6321,7 +6183,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/api/main/build.xml.
-[integrate] Wed Nov 21 14:40:11 EST 2012
+[integrate] Thu Nov 22 14:24:49 EST 2012
 [integrate] Executing "jar" for source "bio/core/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../bio/core/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -6586,7 +6448,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/bio/core/main/build.xml.
-[integrate] Wed Nov 21 14:40:11 EST 2012
+[integrate] Thu Nov 22 14:24:49 EST 2012
 [integrate] Executing "jar" for source "wormmine/dbmodel"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../wormmine/dbmodel
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -7446,7 +7308,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build.xml.
-[integrate] Wed Nov 21 14:40:14 EST 2012
+[integrate] Thu Nov 22 14:24:51 EST 2012
 [integrate] Executing "jar" for source "bio/sources/wormbase-acedb/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../bio/sources/wormbase-acedb/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -7547,6 +7409,11 @@ Skipped because property 'gen.code' not set.
 
 do-compile-without-gen-src:
     [javac] org/intermine/bio/dataconversion/WormbaseAcedbConverter.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/org/intermine/bio/dataconversion/WormbaseAcedbConverter.class is up to date.
+    [javac] wormbase/model/parser/AceObjParser.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser/AceObjParser.class is up to date.
+    [javac] wormbase/model/parser/FileParser.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser/FileParser.class is up to date.
+    [javac] wormbase/model/parser/ModelClass.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser/ModelClass.class is up to date.
+    [javac] wormbase/model/parser/ModelParser.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser/ModelParser.class is up to date.
+    [javac] wormbase/model/parser/MyBufferedReader.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser/MyBufferedReader.class is up to date.
 
 do-compile:
      [copy] No sources found.
@@ -7555,6 +7422,9 @@ do-compile:
      [copy] org/intermine omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/org/intermine is up to date.
      [copy] org/intermine/bio omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/org/intermine/bio is up to date.
      [copy] org/intermine/bio/dataconversion omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/org/intermine/bio/dataconversion is up to date.
+     [copy] wormbase omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase is up to date.
+     [copy] wormbase/model omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model is up to date.
+     [copy] wormbase/model/parser omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser is up to date.
 
 -post-compile:
 
@@ -7570,10 +7440,18 @@ compile:
 
 do-jar:
   [lib:jar] org/intermine/bio/dataconversion/WormbaseAcedbConverter.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:org/intermine/bio/dataconversion/WormbaseAcedbConverter.class is up to date.
+  [lib:jar] wormbase/model/parser/AceObjParser.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/AceObjParser.class is up to date.
+  [lib:jar] wormbase/model/parser/FileParser.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/FileParser.class is up to date.
+  [lib:jar] wormbase/model/parser/ModelClass.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/ModelClass.class is up to date.
+  [lib:jar] wormbase/model/parser/ModelParser.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/ModelParser.class is up to date.
+  [lib:jar] wormbase/model/parser/MyBufferedReader.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/MyBufferedReader.class is up to date.
   [lib:jar] org omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:org/ is up to date.
   [lib:jar] org/intermine omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:org/intermine/ is up to date.
   [lib:jar] org/intermine/bio omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:org/intermine/bio/ is up to date.
   [lib:jar] org/intermine/bio/dataconversion omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:org/intermine/bio/dataconversion/ is up to date.
+  [lib:jar] wormbase omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/ is up to date.
+  [lib:jar] wormbase/model omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/ is up to date.
+  [lib:jar] wormbase/model/parser omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/ is up to date.
   [lib:jar] No Implementation-Title set.No Implementation-Version set.No Implementation-Vendor set.
   [lib:jar] Location: /home/jdmswong/website-intermine/intermine/imbuild/library.xml:141: 
 
@@ -7650,9 +7528,9 @@ build-db-tgt-items:
 
 -retrieve-tgt-from-custom-file:
 [integrate] Processing file: /home/jdmswong/website-intermine/intermine/datadir/wormbase-acedb/.gitignore
-[integrate] JDJDJD::started fileconverter process()
+[integrate] JDJDJD:: started WormbaseAcedbConterter.process()
 [integrate] Processing file: /home/jdmswong/website-intermine/intermine/datadir/wormbase-acedb/gene1.jace
-[integrate] JDJDJD::started fileconverter process()
+[integrate] JDJDJD:: started WormbaseAcedbConterter.process()
 [integrate] ALTER TABLE reference ALTER refid SET STATISTICS 1000
 [integrate] ANALYSE
 
@@ -7785,9 +7663,9 @@ Skipped because property 'release' not set.
 -pre-define-task-classpath:
     [mkdir] Skipping /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/main because it already exists.
    [delete] Deleting directory /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp
-   [delete] Deleting /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp/schema1045798220416312609xml.sql
    [delete] Deleting /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp/report.sql.generation
    [delete] Deleting /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp/sqldb.map
+   [delete] Deleting /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp/schema7439360253632678727xml.sql
    [delete] Deleting directory /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp
     [mkdir] Created dir: /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/tmp
      [copy] /home/jdmswong/website-intermine/intermine/imbuild/task.log4j.properties omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/build/main/log4j.properties is up to date.
@@ -7826,7 +7704,7 @@ library.-init-deps:
 [integrate]  wormmine/dbmodel
 [integrate]  bio/sources/wormbase-acedb/main
 [integrate] ---------------------------------------------------
-[integrate] Wed Nov 21 14:40:20 EST 2012
+[integrate] Thu Nov 22 14:24:55 EST 2012
 [integrate] Executing "jar" for source "intermine/objectstore/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/objectstore/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -8534,7 +8412,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/objectstore/main/build.xml.
-[integrate] Wed Nov 21 14:40:20 EST 2012
+[integrate] Thu Nov 22 14:24:55 EST 2012
 [integrate] Executing "jar" for source "intermine/integrate/model/fulldata"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/integrate/model/fulldata
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -8764,7 +8642,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/integrate/model/fulldata/build.xml.
-[integrate] Wed Nov 21 14:40:21 EST 2012
+[integrate] Thu Nov 22 14:24:56 EST 2012
 [integrate] Executing "jar" for source "intermine/integrate/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/integrate/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -9048,7 +8926,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/integrate/main/build.xml.
-[integrate] Wed Nov 21 14:40:21 EST 2012
+[integrate] Thu Nov 22 14:24:56 EST 2012
 [integrate] Executing "jar" for source "intermine/api/model/userprofile"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/api/model/userprofile
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -9282,7 +9160,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/api/model/userprofile/build.xml.
-[integrate] Wed Nov 21 14:40:22 EST 2012
+[integrate] Thu Nov 22 14:24:57 EST 2012
 [integrate] Executing "jar" for source "intermine/pathquery/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/pathquery/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -9510,7 +9388,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/pathquery/main/build.xml.
-[integrate] Wed Nov 21 14:40:22 EST 2012
+[integrate] Thu Nov 22 14:24:57 EST 2012
 [integrate] Executing "jar" for source "intermine/webservice/client/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/webservice/client/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -9769,7 +9647,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/webservice/client/main/build.xml.
-[integrate] Wed Nov 21 14:40:22 EST 2012
+[integrate] Thu Nov 22 14:24:57 EST 2012
 [integrate] Executing "jar" for source "intermine/api/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../intermine/api/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -10311,7 +10189,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/intermine/api/main/build.xml.
-[integrate] Wed Nov 21 14:40:22 EST 2012
+[integrate] Thu Nov 22 14:24:57 EST 2012
 [integrate] Executing "jar" for source "bio/core/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../bio/core/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -10576,7 +10454,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/bio/core/main/build.xml.
-[integrate] Wed Nov 21 14:40:22 EST 2012
+[integrate] Thu Nov 22 14:24:58 EST 2012
 [integrate] Executing "jar" for source "wormmine/dbmodel"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../wormmine/dbmodel
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -11436,7 +11314,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/intermine/wormmine/dbmodel/build.xml.
-[integrate] Wed Nov 21 14:40:24 EST 2012
+[integrate] Thu Nov 22 14:24:59 EST 2012
 [integrate] Executing "jar" for source "bio/sources/wormbase-acedb/main"  in directory: /home/jdmswong/website-intermine/intermine/imbuild/../bio/sources/wormbase-acedb/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -11537,6 +11415,11 @@ Skipped because property 'gen.code' not set.
 
 do-compile-without-gen-src:
     [javac] org/intermine/bio/dataconversion/WormbaseAcedbConverter.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/org/intermine/bio/dataconversion/WormbaseAcedbConverter.class is up to date.
+    [javac] wormbase/model/parser/AceObjParser.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser/AceObjParser.class is up to date.
+    [javac] wormbase/model/parser/FileParser.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser/FileParser.class is up to date.
+    [javac] wormbase/model/parser/ModelClass.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser/ModelClass.class is up to date.
+    [javac] wormbase/model/parser/ModelParser.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser/ModelParser.class is up to date.
+    [javac] wormbase/model/parser/MyBufferedReader.java omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser/MyBufferedReader.class is up to date.
 
 do-compile:
      [copy] No sources found.
@@ -11545,6 +11428,9 @@ do-compile:
      [copy] org/intermine omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/org/intermine is up to date.
      [copy] org/intermine/bio omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/org/intermine/bio is up to date.
      [copy] org/intermine/bio/dataconversion omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/org/intermine/bio/dataconversion is up to date.
+     [copy] wormbase omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase is up to date.
+     [copy] wormbase/model omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model is up to date.
+     [copy] wormbase/model/parser omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/build/classes/wormbase/model/parser is up to date.
 
 -post-compile:
 
@@ -11560,10 +11446,18 @@ compile:
 
 do-jar:
   [lib:jar] org/intermine/bio/dataconversion/WormbaseAcedbConverter.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:org/intermine/bio/dataconversion/WormbaseAcedbConverter.class is up to date.
+  [lib:jar] wormbase/model/parser/AceObjParser.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/AceObjParser.class is up to date.
+  [lib:jar] wormbase/model/parser/FileParser.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/FileParser.class is up to date.
+  [lib:jar] wormbase/model/parser/ModelClass.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/ModelClass.class is up to date.
+  [lib:jar] wormbase/model/parser/ModelParser.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/ModelParser.class is up to date.
+  [lib:jar] wormbase/model/parser/MyBufferedReader.class omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/MyBufferedReader.class is up to date.
   [lib:jar] org omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:org/ is up to date.
   [lib:jar] org/intermine omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:org/intermine/ is up to date.
   [lib:jar] org/intermine/bio omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:org/intermine/bio/ is up to date.
   [lib:jar] org/intermine/bio/dataconversion omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:org/intermine/bio/dataconversion/ is up to date.
+  [lib:jar] wormbase omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/ is up to date.
+  [lib:jar] wormbase/model omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/ is up to date.
+  [lib:jar] wormbase/model/parser omitted as /home/jdmswong/website-intermine/intermine/bio/sources/wormbase-acedb/main/dist/wormbase-acedb-tasks.jar:wormbase/model/parser/ is up to date.
   [lib:jar] No Implementation-Title set.No Implementation-Version set.No Implementation-Vendor set.
   [lib:jar] Location: /home/jdmswong/website-intermine/intermine/imbuild/library.xml:141: 
 
@@ -11643,4 +11537,4 @@ action:
 default:
 
 BUILD SUCCESSFUL
-Total time: 28 seconds
+Total time: 25 seconds
