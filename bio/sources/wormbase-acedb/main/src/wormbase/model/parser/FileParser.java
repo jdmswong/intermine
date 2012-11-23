@@ -57,7 +57,7 @@ public class FileParser {
         try {
 			while ((line = (String) inputStream.readLine()) != null) {
 			    
-			    System.out.print("*"); // DEBUG
+			    //System.out.print("*"); // DEBUG
 			    
 			    if(line.equals("")){
 			    	if(startedObj){
@@ -74,7 +74,7 @@ public class FileParser {
             if (line == null) {
             	inputStream.close();
             }
-            System.out.println(""); // DEBUG
+            //System.out.println(""); // DEBUG
 		}
 
 		return lines.toArray(new String[lines.size()]);

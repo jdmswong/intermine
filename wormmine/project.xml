@@ -1,4 +1,5 @@
 <project type="bio">
+<!-- base dir is wormmine/integrate -->
   <property name="target.model" value="genomic"/>
   <property name="source.location" location="../bio/sources/"/>
   <property name="common.os.prefix" value="common"/>
@@ -17,7 +18,7 @@
 	  
 	  <source name="wb_acedb" type="wormbase-acedb">
 		  <property name="src.data.dir" 
-			location="/home/jdmswong/website-intermine/intermine/datadir/wormbase-acedb" />
+			location="../../datadir/wormbase-acedb" />
 	  </source>
 
   </sources>

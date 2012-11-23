@@ -10,22 +10,28 @@ package org.intermine.bio.dataconversion;
  *
  */
 
+import java.io.IOException;
 import java.io.Reader;
+import java.util.regex.*;
 
-import org.intermine.dataconversion.ItemWriter;
+import org.apache.commons.lang.StringUtils;
+import org.intermine.dataconversion.*;
 import org.intermine.metadata.Model;
 import org.intermine.xml.full.Item;
 
 import wormbase.model.parser.*;
+
 /**
  * 
  * @author
  */
 public class WormbaseAcedbConverter extends BioFileConverter
 {
-    //
+    
     private static final String DATASET_TITLE = "wormbaseAcedb"; //"Add DataSet.title here";
     private static final String DATA_SOURCE_NAME = "wormbaseAcedbFileconverter"; //"Add DataSource.name here";
+
+	private FileParser fp;
 
     /**
      * Constructor
@@ -43,6 +49,30 @@ public class WormbaseAcedbConverter extends BioFileConverter
      */
     public void process(Reader reader) throws Exception {
     	System.out.println("JDJDJD:: started WormbaseAcedbConverter.process()");
-    	ModelParser mp = new ModelParser(reader);
+    	fp = new FileParser(reader);
+    	
+    	String[] dataChunk;
+		
+		// Get store each WormBase gene ID
+		while( (dataChunk = fp.getDataObj()) != null ){ 
+			WMDebug.debug("JDJDJD:: "+dataChunk[0]);  // DEBUG
+			
+			String firstLine = dataChunk[0];
+			String[] spaceTokens = firstLine.split("\\s+");
+			
+			String[] qtokens = spaceTokens[0].split("\\?",0);
+			
+			String type = qtokens[1];
+			String ID = qtokens[2];
+
+			Item item = createItem(type);
+			if (!StringUtils.isEmpty(ID)) {
+				item.setAttribute("primaryIdentifier", ID);
+			}
+			
+			WMDebug.debug("Storing item "+ID);
+			store(item);
+			
+		}
     }
 }
