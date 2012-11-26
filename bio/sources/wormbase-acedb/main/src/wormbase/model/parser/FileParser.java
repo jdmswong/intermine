@@ -73,6 +73,7 @@ public class FileParser {
 		} finally {
             if (line == null) {
             	inputStream.close();
+            	return null;
             }
             //System.out.println(""); // DEBUG
 		}

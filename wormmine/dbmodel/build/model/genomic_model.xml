@@ -10,19 +10,6 @@
 <class name="IntergenicRegion" extends="SequenceFeature" is-interface="true">
 	<collection name="adjacentGenes" referenced-type="Gene"/>
 </class>
-<class name="OntologyTerm" is-interface="true">
-	<attribute name="identifier" type="java.lang.String"/>
-	<attribute name="obsolete" type="java.lang.Boolean"/>
-	<attribute name="namespace" type="java.lang.String"/>
-	<attribute name="name" type="java.lang.String"/>
-	<attribute name="description" type="java.lang.String"/>
-	<reference name="ontology" referenced-type="Ontology"/>
-	<collection name="relations" referenced-type="OntologyRelation"/>
-	<collection name="synonyms" referenced-type="OntologyTermSynonym"/>
-	<collection name="ontologyAnnotations" referenced-type="OntologyAnnotation" reverse-reference="ontologyTerm"/>
-	<collection name="parents" referenced-type="OntologyTerm"/>
-	<collection name="dataSets" referenced-type="DataSet"/>
-</class>
 <class name="SnoRNA" extends="NcRNA" is-interface="true"></class>
 <class name="Exon" extends="SequenceFeature" is-interface="true">
 	<reference name="gene" referenced-type="Gene" reverse-reference="exons"/>
@@ -149,6 +136,20 @@
 	<attribute name="commonName" type="java.lang.String"/>
 	<attribute name="species" type="java.lang.String"/>
 	<attribute name="name" type="java.lang.String"/>
+</class>
+<class name="OntologyTerm" is-interface="true">
+	<attribute name="identifier" type="java.lang.String"/>
+	<attribute name="obsolete" type="java.lang.Boolean"/>
+	<attribute name="namespace" type="java.lang.String"/>
+	<attribute name="name" type="java.lang.String"/>
+	<attribute name="description" type="java.lang.String"/>
+	<reference name="ontology" referenced-type="Ontology"/>
+	<collection name="relations" referenced-type="OntologyRelation"/>
+	<collection name="synonyms" referenced-type="OntologyTermSynonym"/>
+	<collection name="ontologyAnnotations" referenced-type="OntologyAnnotation" reverse-reference="ontologyTerm"/>
+	<collection name="parents" referenced-type="OntologyTerm"/>
+	<collection name="dataSets" referenced-type="DataSet"/>
+	<collection name="crossReferences" referenced-type="OntologyTerm"/>
 </class>
 <class name="Intron" extends="SequenceFeature" is-interface="true">
 	<collection name="transcripts" referenced-type="Transcript" reverse-reference="introns"/>

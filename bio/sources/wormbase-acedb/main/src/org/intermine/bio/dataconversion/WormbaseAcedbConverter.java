@@ -48,14 +48,14 @@ public class WormbaseAcedbConverter extends BioFileConverter
      * {@inheritDoc}
      */
     public void process(Reader reader) throws Exception {
-    	System.out.println("JDJDJD:: started WormbaseAcedbConverter.process()");
+    	WMDebug.debug("started WormbaseAcedbConverter.process()");
     	fp = new FileParser(reader);
     	
     	String[] dataChunk;
 		
 		// Get store each WormBase gene ID
 		while( (dataChunk = fp.getDataObj()) != null ){ 
-			WMDebug.debug("JDJDJD:: "+dataChunk[0]);  // DEBUG
+			//WMDebug.debug(dataChunk[0]);  // DEBUG
 			
 			String firstLine = dataChunk[0];
 			String[] spaceTokens = firstLine.split("\\s+");
