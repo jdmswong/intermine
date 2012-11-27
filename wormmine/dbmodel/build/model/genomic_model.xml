@@ -22,6 +22,7 @@
 </class>
 <class name="NcRNA" extends="Transcript" is-interface="true"></class>
 <class name="Oligo" extends="SequenceFeature" is-interface="true"></class>
+<class name="SNP" extends="SequenceFeature" is-interface="true"></class>
 <class name="EST" extends="Oligo" is-interface="true">
 	<collection name="overlappingESTSets" referenced-type="OverlappingESTSet" reverse-reference="ESTs"/>
 </class>
@@ -99,6 +100,10 @@
 <class name="UTR" extends="SequenceFeature" is-interface="true">
 	<reference name="gene" referenced-type="Gene" reverse-reference="UTRs"/>
 	<collection name="transcripts" referenced-type="Transcript" reverse-reference="UTRs"/>
+</class>
+<class name="SampleClass" is-interface="true">
+	<attribute name="type" type="java.lang.String"/>
+	<attribute name="name" type="java.lang.String"/>
 </class>
 <class name="Allele" extends="SequenceCollection" is-interface="true">
 	<reference name="gene" referenced-type="Gene" reverse-reference="alleles"/>

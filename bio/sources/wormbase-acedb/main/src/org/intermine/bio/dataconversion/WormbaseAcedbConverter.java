@@ -73,6 +73,8 @@ public class WormbaseAcedbConverter extends BioFileConverter
 			WMDebug.debug("Storing item "+ID);
 			store(item);
 			
+			WMDebug.debug("STOPPED AFTER 1 GENE FOR TESTING PURPOSES");
+			return; // DEBUG
 		}
     }
 }
