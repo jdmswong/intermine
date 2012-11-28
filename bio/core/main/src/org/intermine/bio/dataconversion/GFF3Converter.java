@@ -157,8 +157,8 @@ public class GFF3Converter extends DataConverter
      * @throws ObjectStoreException if an error occurs storing items
      */
     public void process(GFF3Record record) throws ObjectStoreException {
-//    	System.out.println("JDJDJD:: GFF3Converter.process() . Record:\t\t\t"+record.toString());  // DEBUG
-    	System.out.println("JDJDJD:: GFF3Converter.process() start");
+//    	System.out.println("JDJDJD:: GFF3Converter.process() . Record:\t\t\t"+record.toString());  // TODO DEBUG
+//    	System.out.println("JDJDJD:: GFF3Converter.process() start");
     	
     	String identifier = record.getId();
         String refId = identifierMap.get(identifier);
@@ -172,6 +172,14 @@ public class GFF3Converter extends DataConverter
         String className = TypeUtil.javaiseClassName(term);
         String fullClassName = tgtModel.getPackageName() + "." + className;
 
+        // ADDED BY JD //
+        // only accept genes
+        
+        if( !(className.equalsIgnoreCase("Gene")) ){
+        	return;
+        }
+        // =========== //
+        
         ClassDescriptor cd = tgtModel.getClassDescriptorByName(fullClassName);
 
         if (cd == null) {
@@ -197,7 +205,7 @@ public class GFF3Converter extends DataConverter
             if (makeLocation) {
                 Item location = getLocation(record, refId, seq, cd);
                 if (feature == null) {
-                	System.out.println("JDJDJD:: GFF3Converter.process() just wanted the location, returning..."); // DEBUG                    // this feature has already been created and stored
+                	System.out.println("JDJDJD:: GFF3Converter.process() just wanted the location, returning..."); // TODO DEBUG                    // this feature has already been created and stored
                     // we only wanted the location, we're done here.
                     store(location);
                     return;
@@ -214,7 +222,7 @@ public class GFF3Converter extends DataConverter
         }
 
         if (feature == null) {
-            System.out.println("JDJDJD:: GFF3Converter.process() feature already stored, returning..."); // DEBUG
+            System.out.println("JDJDJD:: GFF3Converter.process() feature already stored, returning..."); // TODO DEBUG
             // this feature has already been created and stored
             // feature with discontinous location, this location wasn't valid for some reason
             return;
@@ -537,5 +545,6 @@ public class GFF3Converter extends DataConverter
         }
         return refId;
     }
+    
 }
 

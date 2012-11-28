@@ -92,6 +92,7 @@
          <property name="src.data.dir.includes"  value="c_briggsae.current.annotations.gff3"/>
       </source>
 -->
+ 
       <source name="celegans-gff3" type="wormbase-gff3-core" dump="true">
          <property name="gff3.taxonId"           value="&c_elegans_taxon_id;"/>
          <property name="gff3.seqDataSourceName" value="WormBase"/>
@@ -100,8 +101,9 @@
          <property name="gff3.dataSetTitle"      value="WormBase C. elegans genomic annotations"/>
          <property name="src.data.dir"           location="&datadir;/test_gff3"/>
          
+         <proterty name="test.val"				 value="TEST VALUE"/>
       </source>
-
+ 
 
 <!--
       <source name="cjaponica-gff3" type="wormbase-gff3-core">
@@ -126,9 +128,11 @@
 	
 	
 	<!-- WormBase aceDB data loader -->
-	<source name="wb_acedb" type="wormbase-acedb">
+	 <source name="wb-acedb" type="wormbase-acedb">
 		 <property name="src.data.dir" location="&datadir;/wormbase-acedb" />
-	</source>
+
+         <proterty name="test.val"				 value="TEST VALUE"/>
+	</source> 
 	
   </sources>
 

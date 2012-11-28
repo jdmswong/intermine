@@ -260,4 +260,15 @@ public class GFF3ConverterTask extends Task
 
     }
 
+    /**
+     * Test to see if this function ends up handling property I planted
+     * @param testVal
+     */
+    public void setTestVal(String testVal){
+    	System.out.println("JDJDJD:: GFF3ConverterTask.setTestVal()");
+    	if(testVal.length() > 1){
+    		System.out.println("JDJDJD:: GFF3ConverterTask.setTestVal() = "+testVal);
+    	}
+    }
+
 }

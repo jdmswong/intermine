@@ -73,8 +73,15 @@ public class WormbaseAcedbConverter extends BioFileConverter
 			WMDebug.debug("Storing item "+ID);
 			store(item);
 			
-			WMDebug.debug("STOPPED AFTER 1 GENE FOR TESTING PURPOSES");
-			return; // DEBUG
+//			WMDebug.debug("STOPPED AFTER 1 GENE FOR TESTING PURPOSES");
+//			return; // TODO DEBUG
 		}
     }
+    
+    public void setTestVal(String testVal){
+    	if(testVal.length() > 1){
+    		System.out.println("JDJDJD:: WormbaseGff3CoreGff.setTestVal = "+testVal);
+    	}
+    }
+
 }

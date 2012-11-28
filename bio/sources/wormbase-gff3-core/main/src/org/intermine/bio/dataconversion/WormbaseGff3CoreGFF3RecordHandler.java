@@ -59,4 +59,5 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
 //    	System.out.println("JDJDJD:: WormbaseGff3CoreGFF3RecordHandler.process() :\t"+record.toString());
     }
 
+
 }
