@@ -162,6 +162,7 @@
 </class>
 <class name="GoldenPathFragment" extends="SequenceFeature" is-interface="true"></class>
 <class name="CDNAClone" extends="SequenceFeature" is-interface="true"></class>
+<class name="CloneInsertEnd" extends="SequenceFeature" is-interface="true"></class>
 <class name="FivePrimeUTR" extends="UTR" is-interface="true"></class>
 <class name="CDS" extends="SequenceFeature" is-interface="true">
 	<reference name="gene" referenced-type="Gene" reverse-reference="CDSs"/>

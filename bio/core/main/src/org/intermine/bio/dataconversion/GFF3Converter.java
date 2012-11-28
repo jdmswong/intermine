@@ -157,7 +157,10 @@ public class GFF3Converter extends DataConverter
      * @throws ObjectStoreException if an error occurs storing items
      */
     public void process(GFF3Record record) throws ObjectStoreException {
-        String identifier = record.getId();
+//    	System.out.println("JDJDJD:: GFF3Converter.process() . Record:\t\t\t"+record.toString());  // DEBUG
+    	System.out.println("JDJDJD:: GFF3Converter.process() start");
+    	
+    	String identifier = record.getId();
         String refId = identifierMap.get(identifier);
 
         // get rid of previous record Items from handler
@@ -194,7 +197,7 @@ public class GFF3Converter extends DataConverter
             if (makeLocation) {
                 Item location = getLocation(record, refId, seq, cd);
                 if (feature == null) {
-                    // this feature has already been created and stored
+                	System.out.println("JDJDJD:: GFF3Converter.process() just wanted the location, returning..."); // DEBUG                    // this feature has already been created and stored
                     // we only wanted the location, we're done here.
                     store(location);
                     return;
@@ -211,6 +214,7 @@ public class GFF3Converter extends DataConverter
         }
 
         if (feature == null) {
+            System.out.println("JDJDJD:: GFF3Converter.process() feature already stored, returning..."); // DEBUG
             // this feature has already been created and stored
             // feature with discontinous location, this location wasn't valid for some reason
             return;
@@ -242,7 +246,10 @@ public class GFF3Converter extends DataConverter
         for (Item synonym : synonymsToAdd) {
             handler.addItem(synonym);
         }
+        
+
         handler.process(record);
+        
         if (handler.getDataSetReferenceList().getRefIds().size() > 0) {
             feature.addCollection(handler.getDataSetReferenceList());
         }

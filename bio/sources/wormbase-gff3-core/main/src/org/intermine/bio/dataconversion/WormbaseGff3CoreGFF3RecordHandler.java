@@ -14,6 +14,8 @@ import org.intermine.bio.io.gff3.GFF3Record;
 import org.intermine.metadata.Model;
 import org.intermine.xml.full.Item;
 
+import wormbase.model.parser.WMDebug;
+
 /**
  * A converter/retriever for the WormbaseGff3Core dataset via GFF files.
  */
@@ -53,6 +55,8 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
         // You should make sure that new Items you create are unique, i.e. by storing in a map by
         // some identifier. 
 
+    	WMDebug.debug("WormbaseGff3CoreGFF3RecordHandler.process() called");
+//    	System.out.println("JDJDJD:: WormbaseGff3CoreGFF3RecordHandler.process() :\t"+record.toString());
     }
 
 }
