@@ -110,6 +110,8 @@ public class GFF3ConverterTask extends Task
      * @param seqDataSourceName the seqDataSourceName
      */
     public void setSeqDataSourceName(String seqDataSourceName) {
+    	System.out.println("JDJDJD:: GFF3ConverterTask.seqSeqDataSourceName() = "+
+    			seqDataSourceName); // TODO DEBUG
         this.seqDataSourceName = seqDataSourceName;
     }
 
@@ -265,7 +267,7 @@ public class GFF3ConverterTask extends Task
      * @param testVal
      */
     public void setTestVal(String testVal){
-    	System.out.println("JDJDJD:: GFF3ConverterTask.setTestVal()");
+    	System.out.println("JDJDJD:: GFF3ConverterTask.setTestVal()"); // TODO DEBUG
     	if(testVal.length() > 1){
     		System.out.println("JDJDJD:: GFF3ConverterTask.setTestVal() = "+testVal);
     	}

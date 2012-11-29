@@ -1,0 +1,5 @@
+./dbm;
+cd integrate;
+ant -v -Dsource=celegans-gff3 > ../intlog.txt;
+cd ..;
+

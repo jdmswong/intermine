@@ -101,7 +101,10 @@
          <property name="gff3.dataSetTitle"      value="WormBase C. elegans genomic annotations"/>
          <property name="src.data.dir"           location="&datadir;/test_gff3"/>
          
-         <proterty name="test.val"				 value="TEST VALUE"/>
+         <property name="gff3.testVal" 			 value="TEST VALUE1"/>
+         <property name="testVal"				 value="TEST VALUE2"/>
+         <property name="test.val"				 value="TEST VALUE3"/>
+
       </source>
  
 
@@ -128,13 +131,14 @@
 	
 	
 	<!-- WormBase aceDB data loader -->
-	 <source name="wb-acedb" type="wormbase-acedb">
-		 <property name="src.data.dir" location="&datadir;/wormbase-acedb" />
-
-         <proterty name="test.val"				 value="TEST VALUE"/>
+	<source name="wb-acedb" type="wormbase-acedb">
+		<property name="src.data.dir" location="&datadir;/wormbase-acedb" />
+		<property name="src.data.dir" location="asdfasdfasdf"/>
+		
+        <property name="testVal"				 value="TEST VALUE1"/>
 	</source> 
 	
-  </sources>
+   </sources>
 
   <post-processing>
 

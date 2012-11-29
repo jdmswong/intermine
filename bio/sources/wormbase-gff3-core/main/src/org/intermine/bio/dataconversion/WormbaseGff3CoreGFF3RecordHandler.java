@@ -55,7 +55,7 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
         // You should make sure that new Items you create are unique, i.e. by storing in a map by
         // some identifier. 
 
-    	WMDebug.debug("WormbaseGff3CoreGFF3RecordHandler.process() called");
+//    	WMDebug.debug("WormbaseGff3CoreGFF3RecordHandler.process() called"); // TODO DEBUG
 //    	System.out.println("JDJDJD:: WormbaseGff3CoreGFF3RecordHandler.process() :\t"+record.toString());
     }
 
