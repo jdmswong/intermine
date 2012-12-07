@@ -90,7 +90,7 @@ public class FileParser {
 	 */
 	public String getDataString() throws IOException{
 		String[] lines = getDataObj();
-		if(lines == null){
+		if(lines == null | lines.length == 0){
 			return null;
 		}
 		
