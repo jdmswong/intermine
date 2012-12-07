@@ -16,7 +16,10 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.*;
 
 import javax.xml.xpath.XPath;
@@ -181,7 +184,6 @@ public class WormbaseAcedbConverter extends BioFileConverter
 					        	System.out.println(collectionIDs[i]);  // TODO debug
 					        }
 					        
-					        WMDebug.debug(collectionIDs.toString());
 				        	// TODO fill this in
 				        }else{
 				        	throw new Exception(currentClass+".["+dataPath+
@@ -222,6 +224,13 @@ public class WormbaseAcedbConverter extends BioFileConverter
     	}
     	
     	// Store all items in storedRefItems
+    	Iterator<Entry<String, Item>> keySetIter = 
+    			storedRefItems.entrySet().iterator();
+    	while(keySetIter.hasNext()){
+    		Entry<String, Item> keySet = keySetIter.next();
+    		WMDebug.debug("Storing item:["+keySet.getKey()+"]");
+    		store(keySet.getValue());
+    	}
     	
     }
     
@@ -260,7 +269,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
 
 			WMDebug.debug("Storing " + refClassName + " with primary ID:"
 					+ pID);
-			store(referencedItem);
+//			store(referencedItem);
 			storedRefItems.put(fieldName + ":" + pID,
 					referencedItem);
 		}
