@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.regex.*;
 
@@ -24,7 +25,8 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.lang.StringUtils;
 import org.intermine.dataconversion.*;
-import org.intermine.metadata.Model;
+import org.intermine.metadata.*;
+import org.intermine.util.TypeUtil;
 import org.intermine.xml.full.Item;
 import org.w3c.dom.Document;
 
@@ -41,17 +43,55 @@ public class WormbaseAcedbConverter extends BioFileConverter
     private static final String DATA_SOURCE_NAME = "wormbaseAcedbFileconverter"; //"Add DataSource.name here";
 
     private DataMapper dataMapping = null;
+    private Model model;
+    private ClassDescriptor classCD; // CD of current data type being processed 
+    
+    // Items that have already been referenced and stored
+    // Key: "className:id" 
+	private HashMap<String, Item> storedRefItems; 
 	
 
+	private String currentClass = "Gene"; // TODO set to gene for now
+	private HashMap<String, String> keyMapping; // the primary key for each class TODO for debugging
+	
     /**
      * Constructor
      * @param writer the ItemWriter used to handle the resultant items
      * @param model the Model
      */
-    public WormbaseAcedbConverter(ItemWriter writer, Model model) {
-        super(writer, model, DATA_SOURCE_NAME, DATASET_TITLE);
+    public WormbaseAcedbConverter(ItemWriter writer, Model _model) {
+        super(writer, _model, DATA_SOURCE_NAME, DATASET_TITLE);
         
         WMDebug.debug("Constructor called"); // TODO
+        keyMapping = new HashMap<String, String>();
+        keyMapping.put("Organism", "name"); // TODO for debugging
+        
+        storedRefItems = new HashMap<String, Item>();
+        model = _model;
+        
+        classCD = model.getClassDescriptorByName(currentClass);
+        
+//        // Begin debug code
+//        ClassDescriptor geneCD = model.getClassDescriptorByName("Gene");
+//        
+//        
+//        String label[] = {
+//        		"Gene attrs",
+//        		"Gene refs",
+//        		"Gene colls",
+//        		"Gene fields"
+//        		};
+//        String value[] = {
+//        		geneCD.getAllAttributeDescriptors().toString(),
+//        		geneCD.getAllReferenceDescriptors().toString(),
+//        		geneCD.getAllCollectionDescriptors().toString(),
+//        		geneCD.getAllFieldDescriptors().toString()
+//        		};
+//        for(int i=0; i<label.length; i++){
+//        	System.out.printf("[%s]\t[%s]\n",label[i],value[i]);
+//        }
+//        // end debug code
+        
     }
 
     /**
@@ -83,12 +123,21 @@ public class WormbaseAcedbConverter extends BioFileConverter
         Enumeration<Object> dataPathEnum = dataMapping.keys();
         
         // TODO: hard code Gene for now
-        Item item = createItem("Gene");
+        Item item = createItem(currentClass);
+        
+        // TODO test code block
+//        Item org = createItem("Organism");
+//        org.setAttribute("name","Caenorhabditis elegans");
+//        store(org);
+////        store(org);
+        
+        // end test code block
+        
         
         String dataPath;
         String ID = null;
-        while( dataPathEnum.hasMoreElements() ){
-        	dataPath = (String) dataPathEnum.nextElement();
+        while( dataPathEnum.hasMoreElements() ){ // foreach property mapping
+        	dataPath = (String) dataPathEnum.nextElement(); // ex: symbol
         	String xpathQuery = dataMapping.getProperty(dataPath);
         	
         	// The XPath object compiles the XPath expression
@@ -100,39 +149,82 @@ public class WormbaseAcedbConverter extends BioFileConverter
 	        	ID = xPathValue;
 	        }
 	        
-			WMDebug.debug("Setting ["+dataPath+"] to ["+xPathValue+"]");
-	        if (!StringUtils.isEmpty(xPathValue)) {
-				item.setAttribute(dataPath, xPathValue);
-			}
-	        
-	        if( ID == null ){
-	        	throw new Exception("InterMine ID not defined");
+	        // '.' indicates join, aka reference or collection
+	        if( dataPath.contains(".") ){
+	        	
+	        	Matcher fNMatcher = Pattern.compile("(.*?)\\.").matcher(dataPath);
+	        	if( fNMatcher.find() ){
+		        	String fieldName = fNMatcher.group(1);
+		        	
+			        FieldDescriptor fd = classCD.getFieldDescriptorByName(fieldName);
+			        if( fd == null ){
+			        	throw new Exception("Type not found in model");
+			        }
+			        
+			        // Determine if field is reference or collection
+			        if( fd.isReference() ){
+			        	
+			        	ReferenceDescriptor rd = (ReferenceDescriptor) fd; 
+			        	String refClassName = 
+			        			TypeUtil.unqualifiedName(rd.getReferencedClassName());
+			        	
+			        	Item referencedItem;
+			        	
+			        	// Key: className:id
+			        	if(storedRefItems.containsKey(fd.getName()+":"+xPathValue)){ 
+			        		referencedItem = storedRefItems.get(fd.getName()+":"+xPathValue);
+			        	}else{
+			        		WMDebug.debug("new "+refClassName+" object:"+xPathValue);
+			        		referencedItem = createItem(refClassName);
+			        		
+			        		if(keyMapping.containsKey(refClassName)){
+			        			referencedItem.setAttribute( keyMapping.get(refClassName), xPathValue );
+			        		}else{
+			        			throw new Exception("keyMapping has no \"class key value\" for "+refClassName);
+			        		}
+			        		
+			        		WMDebug.debug("Storing "+refClassName+
+			        				" with primary ID:"+xPathValue);
+				        	store(referencedItem);
+			        		storedRefItems.put(fd.getName()+":"+xPathValue, referencedItem);
+			        	}
+			        	
+			        	WMDebug.debug("Setting current "+currentClass+"."+rd.getName()+" to: ("+refClassName+")["+xPathValue+"]" );
+			        	item.setReference(rd.getName(), referencedItem.getIdentifier());
+			        	
+			        }else if(fd.isCollection()){
+			        	// TODO fill this in
+			        }else{
+			        	throw new Exception(currentClass+".["+fd.getName()+
+			        			"] neither nor collection in model");
+			        }
+			        
+	        	}else{
+	        		throw new Exception("Matching error: ["+"] expected to contain '.'");
+	        	}
+	        }else{
+	        	// Field is attribute
+				WMDebug.debug("Setting attribute ["+dataPath+"] to ["+xPathValue+"] if nonempty");
+		        if (!StringUtils.isEmpty(xPathValue)) {
+					item.setAttribute(dataPath, xPathValue);
+				}
+	        	
 	        }
+	        
+	        
+	        
         }
-        WMDebug.debug("Storing item "+ID);
+        
+        if( ID == null ){
+        	throw new Exception("InterMine ID not defined");
+        }
+        WMDebug.debug("Storing "+currentClass+" with ID:"+ID);
         store(item);
 
     	
     	
     	// end foreach
     	
-		// Get the XML org.w3c.dom.Document
-//		while( (dataString = fp.getDataString()) != null ){ 
-//			Document XML = PackageUtils.loadXMLFrom(dataString);
-//			
-////			Item item = createItem(type);
-////			if (!StringUtils.isEmpty(ID)) {
-////				item.setAttribute("primaryIdentifier", ID);
-////			}
-////			
-////			
-////			
-////			WMDebug.debug("Storing item "+ID);
-////			store(item);
-//			
-//			WMDebug.debug("STOPPED AFTER 1 GENE FOR TESTING PURPOSES");
-//			return; // TODO DEBUG
-//		}
     }
     
     public void setTestVal(String testVal){
