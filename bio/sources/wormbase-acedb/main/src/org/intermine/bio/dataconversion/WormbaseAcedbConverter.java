@@ -69,8 +69,12 @@ public class WormbaseAcedbConverter extends BioFileConverter
         super(writer, _model, DATA_SOURCE_NAME, DATASET_TITLE);
         
         WMDebug.debug("Constructor called");
+        
+        // keyMapping hash block for debugging
         keyMapping = new HashMap<String, String>();
-        keyMapping.put("Organism", "name"); // TODO for debugging
+        keyMapping.put("Organism", "name"); 
+        keyMapping.put("Transcript", "primaryIdentifier"); 
+        // end keyMapping hash block
         
         storedRefItems = new HashMap<String, Item>();
         model = _model;
@@ -147,6 +151,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
 		        // '.' indicates join, aka reference or collection
 		        if( dataPath.contains(".") ){
 		        	
+		        	
 		        	Matcher fNMatcher = Pattern.compile("(.*?)\\.").matcher(dataPath);
 		        	if( fNMatcher.find() ){
 			        	String fieldName = fNMatcher.group(1);
@@ -159,30 +164,118 @@ public class WormbaseAcedbConverter extends BioFileConverter
 			        	ReferenceDescriptor rd = (ReferenceDescriptor) fd; 
 			        	String refClassName = 
 			        			TypeUtil.unqualifiedName(rd.getReferencedClassName());
+			        	
+			        	
+				        /*
+			        	// What is the relationship cardinality ?
+			        	switch (rd.relationType() ){
+			        		// x:1 are references from this object
+				        	case FieldDescriptor.ONE_ONE_RELATION:
+				        		WMDebug.debug("1:1 relationship");
+				        		break;
+				        	case FieldDescriptor.N_ONE_RELATION:
+				        		WMDebug.debug("N:1 relationship");
+				        		break;
+				        		
+				        	// x:N are collections
+			        		case FieldDescriptor.ONE_N_RELATION:
+			        			// TODO get item from getRefItem and fill in relationships n stuff
+			        			WMDebug.debug("1:N relationship");
+			        			break;
+			        		case FieldDescriptor.M_N_RELATION:
+			        			
+			        			WMDebug.debug("M:N relationship");
+			        			break;
+			        	}
+			        	*/
+			        	
+			        	if( rd.relationType() == FieldDescriptor.ONE_ONE_RELATION ||
+			        		rd.relationType() == FieldDescriptor.N_ONE_RELATION   )
+			        	{
+			        		WMDebug.debug("This is a reference");
+			        		
+				        	String xPathValue = StringUtils.strip( expr.evaluate(doc) );
+				        	Item referencedItem = getRefItem(refClassName, xPathValue);
+				        	
+				        	WMDebug.debug("Setting current "+currentClass+"."+fd.getName()+" to: ("+refClassName+")["+xPathValue+"]" );
+				        	item.setReference(rd.getName(), referencedItem.getIdentifier());
+				        	
+				        	if( 		rd.relationType() == FieldDescriptor.ONE_ONE_RELATION ){
+				        		WMDebug.debug("1:1");
+				        		// TODO fill in
+				        	}else if(	rd.relationType() == FieldDescriptor.N_ONE_RELATION){
+				        		WMDebug.debug("N:1");
+				        		// TODO fill in
+				        	}
+			        		
+			        	}else if( 	rd.relationType() == FieldDescriptor.ONE_N_RELATION ||
+			        				rd.relationType() == FieldDescriptor.M_N_RELATION   )
+			        	{
+			        		WMDebug.debug("This is a collection"); 
+			        		
+			        		if( 		rd.relationType() == FieldDescriptor.ONE_N_RELATION ){
+			        			WMDebug.debug("1:N");
+			        		}else if(	rd.relationType() == FieldDescriptor.M_N_RELATION   ){
+			        			WMDebug.debug("M:N");
+			        		}
+			        		
+			        		CollectionDescriptor cd = (CollectionDescriptor) rd;
+			        		Item referencedItem = createItem(refClassName); // Initialized by necessity
+			        		
+				        	// Get set of IDs referenced
+					        NodeList resultNodes = (NodeList) expr.evaluate(doc,  XPathConstants.NODESET);
+					        String collectionIDs[] = new String[resultNodes.getLength()]; 
+					        for(int i = 0; i < resultNodes.getLength(); i++) {
+					            collectionIDs[i] = StringUtils.strip(resultNodes.item(i).getTextContent()); 
+				        		referencedItem = getRefItem(refClassName, collectionIDs[i]);
+				        		item.addToCollection(cd.getName(), referencedItem);
+				        		
+					            WMDebug.debug(cd.getName()+":["+collectionIDs[i]+"]");
+			        		
+				        		if( 		rd.relationType() == FieldDescriptor.ONE_N_RELATION ){
+				        			WMDebug.debug("1:N");
+				        			ReferenceDescriptor rrd = cd.getReverseReferenceDescriptor();
+				        			if(rrd == null){
+				        				WMDebug.debug("Unidirectional, no reverse reference");
+				        			}else{
+				        				WMDebug.debug(String.format(
+				        						"Setting (%s)%s.%s=[%s]", 
+				        						rd.getName(), refClassName, 
+				        						rrd.getName(), collectionIDs[i]));
+				        				referencedItem.setReference(rrd.getName(), item);
+				        			}
+				        			
+				        		}else if(	rd.relationType() == FieldDescriptor.M_N_RELATION   ){
+				        			WMDebug.debug("M:N");
+				        			// TODO fill in 
+				        		}
+			        		
+					        }
+			        		
+			        		
+			        		
+			        	}else{
+			        		// TODO THROW something here 
+			        	}
+			        	
+
+
+/*			        	
 				        // Determine if field is reference or collection
 				        if( fd.isReference() ){
 				        	WMDebug.debug("This is a reference");
 				        	
-				        	String xPathValue = StringUtils.strip( expr.evaluate(doc) );
-				        	String referencedItemID = getRefID(rd.getName(), xPathValue).getIdentifier();
-				        	
-				        	
-				        	WMDebug.debug("Setting current "+currentClass+"."+fd.getName()+" to: ("+refClassName+")["+xPathValue+"]" );
-				        	item.setReference(rd.getName(), referencedItemID);
 				        	
 				        }else if(fd.isCollection()){
-				        	WMDebug.debug("This is a collection");
+				        	WMDebug.debug("This is a collection"); 
 				        	
-				        	// Get set of IDs
+				        	// Get set of IDs referenced
 					        NodeList resultNodes = (NodeList) expr.evaluate(doc,  XPathConstants.NODESET);
 					        String collectionIDs[] = new String[resultNodes.getLength()]; 
 					        for(int i = 0; i < resultNodes.getLength(); i++) {
 					            collectionIDs[i] = StringUtils.strip(resultNodes.item(i).getTextContent()); 
 					        }
 	
-					        for(int i=0; i<collectionIDs.length; i++){
-					        	System.out.println(collectionIDs[i]);  // TODO debug
-					        }
 					        
 				        	// TODO fill this in
 				        }else{
@@ -190,7 +283,8 @@ public class WormbaseAcedbConverter extends BioFileConverter
 				        			"] either malformed, or is neither a "+
 				        			"reference nor collection");
 				        }
-				        
+*/
+				     
 		        	}else{
 		        		throw new Exception("Matching error: ["+dataPath+"] expected to contain '.'");
 		        	}
@@ -204,7 +298,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
 			        }
 			        
 		        	// DataPath describes attribute
-					WMDebug.debug("Setting attribute ["+dataPath+"] to ["+xPathValue+"] if nonempty");
+					WMDebug.debug("Setting attribute ["+dataPath+"] to ["+xPathValue+"]");
 			        if (!StringUtils.isEmpty(xPathValue)) {
 						item.setAttribute(dataPath, xPathValue);
 					}
@@ -212,7 +306,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
 		        }
 		        
 		        
-		        
+		        WMDebug.debug("=======================");
 	        }
 	        
 	        if( ID == null ){
@@ -223,6 +317,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
 	    	
     	}
     	
+    	WMDebug.debug("==== Flushing cached reference items ====");
     	// Store all items in storedRefItems
     	Iterator<Entry<String, Item>> keySetIter = 
     			storedRefItems.entrySet().iterator();
@@ -241,37 +336,33 @@ public class WormbaseAcedbConverter extends BioFileConverter
      * @return InterMine item identifier for this object
      * @throws Exception 
      */
-	public Item getRefID(String fieldName, String pID) throws Exception {
-    	ReferenceDescriptor rd = classCD.getReferenceDescriptorByName(fieldName, true);
-    	if( rd == null ){
-    		throw new Exception(fieldName+" expected to be reference field for "+currentClass);
+	public Item getRefItem(String className, String pID) throws Exception {
+//    	ReferenceDescriptor rd = classCD.getReferenceDescriptorByName(fieldName, true);
+    	if( className == null ){
+    		throw new Exception("getRefID className parameter is null");
+    	}
+    	if( pID == null ){
+    		throw new Exception("getRefID pID parameter is null");
     	}
     	
-    	String refClassName = 
-    			TypeUtil.unqualifiedName(rd.getReferencedClassName());
-
 		Item referencedItem; 
-		if (storedRefItems.containsKey(fieldName + ":" + pID)) {
-			referencedItem = storedRefItems.get(fieldName + ":"
+		if (storedRefItems.containsKey(className + ":" + pID)) {
+			referencedItem = storedRefItems.get(className + ":"
 					+ pID);
 		} else {
-			WMDebug.debug("new " + refClassName + " object:" + pID);
-			referencedItem = createItem(refClassName);
+			WMDebug.debug("new " + className + " object:" + pID);
+			referencedItem = createItem(className);
 
-			if (keyMapping.containsKey(refClassName)) {
-				referencedItem.setAttribute(keyMapping.get(refClassName),
+			if (keyMapping.containsKey(className)) {
+				referencedItem.setAttribute(keyMapping.get(className),
 						pID);
 			} else {
 				throw new Exception(
-						"keyMapping has no \"class key value\" for "
-								+ refClassName);
+						"keyMapping hash has no \"class key value\" for "
+								+ className);
 			}
 
-			WMDebug.debug("Storing " + refClassName + " with primary ID:"
-					+ pID);
-//			store(referencedItem);
-			storedRefItems.put(fieldName + ":" + pID,
-					referencedItem);
+			storedRefItems.put(className+":"+pID, referencedItem);
 		}
 
 		return referencedItem;
