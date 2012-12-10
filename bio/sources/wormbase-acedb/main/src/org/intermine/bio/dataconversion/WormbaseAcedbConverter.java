@@ -17,6 +17,7 @@ import java.io.Reader;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
@@ -133,7 +134,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
 	        // Get enumerator of InterMine datapaths to map (ex: primaryIdentifier)
 	        Enumeration<Object> dataPathEnum = dataMapping.keys();
 	        
-	        // TODO: hard code Gene for now
+	        
 	        Item item = createItem(currentClass);
 	        
 	        
@@ -166,29 +167,6 @@ public class WormbaseAcedbConverter extends BioFileConverter
 			        			TypeUtil.unqualifiedName(rd.getReferencedClassName());
 			        	
 			        	
-				        /*
-			        	// What is the relationship cardinality ?
-			        	switch (rd.relationType() ){
-			        		// x:1 are references from this object
-				        	case FieldDescriptor.ONE_ONE_RELATION:
-				        		WMDebug.debug("1:1 relationship");
-				        		break;
-				        	case FieldDescriptor.N_ONE_RELATION:
-				        		WMDebug.debug("N:1 relationship");
-				        		break;
-				        		
-				        	// x:N are collections
-			        		case FieldDescriptor.ONE_N_RELATION:
-			        			// TODO get item from getRefItem and fill in relationships n stuff
-			        			WMDebug.debug("1:N relationship");
-			        			break;
-			        		case FieldDescriptor.M_N_RELATION:
-			        			
-			        			WMDebug.debug("M:N relationship");
-			        			break;
-			        	}
-			        	*/
-			        	
 			        	if( rd.relationType() == FieldDescriptor.ONE_ONE_RELATION ||
 			        		rd.relationType() == FieldDescriptor.N_ONE_RELATION   )
 			        	{
@@ -202,24 +180,25 @@ public class WormbaseAcedbConverter extends BioFileConverter
 				        	
 				        	if( 		rd.relationType() == FieldDescriptor.ONE_ONE_RELATION ){
 				        		WMDebug.debug("1:1");
-				        		// TODO fill in
+				        		// UNTESTED
+				        		setRevRefIfExists(item, referencedItem, rd);
 				        	}else if(	rd.relationType() == FieldDescriptor.N_ONE_RELATION){
 				        		WMDebug.debug("N:1");
-				        		// TODO fill in
+				        		addToRevColIfExists(item, referencedItem, rd);
 				        	}
 			        		
 			        	}else if( 	rd.relationType() == FieldDescriptor.ONE_N_RELATION ||
 			        				rd.relationType() == FieldDescriptor.M_N_RELATION   )
 			        	{
 			        		WMDebug.debug("This is a collection"); 
+			        		CollectionDescriptor cd = (CollectionDescriptor) rd;
 			        		
-			        		if( 		rd.relationType() == FieldDescriptor.ONE_N_RELATION ){
+			        		if( 		cd.relationType() == FieldDescriptor.ONE_N_RELATION ){
 			        			WMDebug.debug("1:N");
-			        		}else if(	rd.relationType() == FieldDescriptor.M_N_RELATION   ){
+			        		}else if(	cd.relationType() == FieldDescriptor.M_N_RELATION   ){
 			        			WMDebug.debug("M:N");
 			        		}
 			        		
-			        		CollectionDescriptor cd = (CollectionDescriptor) rd;
 			        		Item referencedItem = createItem(refClassName); // Initialized by necessity
 			        		
 				        	// Get set of IDs referenced
@@ -232,22 +211,12 @@ public class WormbaseAcedbConverter extends BioFileConverter
 				        		
 					            WMDebug.debug(cd.getName()+":["+collectionIDs[i]+"]");
 			        		
-				        		if( 		rd.relationType() == FieldDescriptor.ONE_N_RELATION ){
-				        			WMDebug.debug("1:N");
-				        			ReferenceDescriptor rrd = cd.getReverseReferenceDescriptor();
-				        			if(rrd == null){
-				        				WMDebug.debug("Unidirectional, no reverse reference");
-				        			}else{
-				        				WMDebug.debug(String.format(
-				        						"Setting (%s)%s.%s=[%s]", 
-				        						rd.getName(), refClassName, 
-				        						rrd.getName(), collectionIDs[i]));
-				        				referencedItem.setReference(rrd.getName(), item);
-				        			}
-				        			
-				        		}else if(	rd.relationType() == FieldDescriptor.M_N_RELATION   ){
+				        		if( 		cd.relationType() == FieldDescriptor.ONE_N_RELATION ){
+				        			setRevRefIfExists(item, referencedItem, cd);
+				        		}else if(	cd.relationType() == FieldDescriptor.M_N_RELATION   ){
 				        			WMDebug.debug("M:N");
-				        			// TODO fill in 
+				        			// UNTESTED
+				        			addToRevColIfExists(item, referencedItem, rd);
 				        		}
 			        		
 					        }
@@ -260,31 +229,6 @@ public class WormbaseAcedbConverter extends BioFileConverter
 			        	
 
 
-/*			        	
-				        // Determine if field is reference or collection
-				        if( fd.isReference() ){
-				        	WMDebug.debug("This is a reference");
-				        	
-				        	
-				        }else if(fd.isCollection()){
-				        	WMDebug.debug("This is a collection"); 
-				        	
-				        	// Get set of IDs referenced
-					        NodeList resultNodes = (NodeList) expr.evaluate(doc,  XPathConstants.NODESET);
-					        String collectionIDs[] = new String[resultNodes.getLength()]; 
-					        for(int i = 0; i < resultNodes.getLength(); i++) {
-					            collectionIDs[i] = StringUtils.strip(resultNodes.item(i).getTextContent()); 
-					        }
-	
-					        
-				        	// TODO fill this in
-				        }else{
-				        	throw new Exception(currentClass+".["+dataPath+
-				        			"] either malformed, or is neither a "+
-				        			"reference nor collection");
-				        }
-*/
-				     
 		        	}else{
 		        		throw new Exception("Matching error: ["+dataPath+"] expected to contain '.'");
 		        	}
@@ -377,6 +321,43 @@ public class WormbaseAcedbConverter extends BioFileConverter
 			throw e;
 		}
     	System.out.println("Processed mapping file: "+mappingFile);
+    }
+    
+    /**
+     * Sets the reverse reference of referenced classes of 1:1 and N:1 
+     * relationships.
+     * @param currentItem The item whose fields are being processed.
+     * @param referencedItem The item the currentItem's reference points to
+     * @param rd Descriptor for currentItem's current reference being processed 
+     * @param refPID The primary ID intended to be set for referencedItem
+     */
+    public void setRevRefIfExists(Item currentItem, Item referencedItem, 
+    		ReferenceDescriptor rd){
+    	ReferenceDescriptor rrd = rd.getReverseReferenceDescriptor();
+		if(rrd == null){
+			WMDebug.debug("Unidirectional, no reverse reference");
+		}else{
+			WMDebug.debug(String.format(
+					"Setting (%s)%s.%s= current item", 
+					rd.getName(), rd.getReferencedClassName(), 
+					rrd.getName()));
+			referencedItem.setReference(rrd.getName(), currentItem);
+		}
+    }
+    
+    public void addToRevColIfExists(Item currentItem, Item referencedItem, 
+    		ReferenceDescriptor rd){
+    	CollectionDescriptor rcd = (CollectionDescriptor) rd.getReverseReferenceDescriptor();
+		if(rcd == null){
+			WMDebug.debug("Unidirectional, no reverse reference");
+		}else{
+			WMDebug.debug(String.format(
+					"Adding current item to (%s)%s.%s", 
+					rd.getName(), rd.getReferencedClassName(), 
+					rcd.getName()));
+			referencedItem.addToCollection(rcd.getName(), currentItem);
+		}
+
     }
     
 }
