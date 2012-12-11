@@ -75,7 +75,7 @@ public class PackageUtils {
 	 * @param xml
 	 * @return
 	 */
-	public String sanitizeXMLTags(String xml){
+	public static String sanitizeXMLTags(String xml){
 		String repairedXML = new String();
 		
 		HashMap<Integer, String> numberMap = new HashMap<Integer, String>();
@@ -98,11 +98,11 @@ public class PackageUtils {
 		while(matcher.find()){
 			String digit = matcher.group(2);
 			String processedText = numberMap.get(Integer.parseInt(digit));
-			matcher.appendReplacement(sb, matcher.group(2)+processedText);
+			matcher.appendReplacement(sb, matcher.group(1)+processedText);
 		}
 		matcher.appendTail(sb);
 
 		
-		return repairedXML;
+		return sb.toString();
 	}
 }
