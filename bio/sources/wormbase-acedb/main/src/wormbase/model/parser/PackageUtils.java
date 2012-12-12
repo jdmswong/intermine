@@ -133,7 +133,7 @@ public class PackageUtils {
 
 		// Non-greedily matches any character string between <Text> and any tag
 		// between 1 and 18 characters in it.
-		String patternStr = "(<Text>)(.+?)(</?[^<>]{1,18}>)";
+		String patternStr = "(<Text>)(.+?)(</?[^<>@]{1,18}>)";
 		
 		Pattern pattern = Pattern.compile(patternStr);
 		Matcher matcher = pattern.matcher(xml);

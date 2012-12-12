@@ -50,6 +50,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
     
 	private final String currentClass = "Gene"; 
 	private final String errorFilePath = "/home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/wbconverter_error.txt";
+	private final String rejectFilePath = "/home/jdmswong/intermine/datadir/wormbase-acedb/wormbase-acedb-rejects.xml";
 
 	private static final String DATASET_TITLE = "wormbaseAcedb"; //"Add DataSet.title here";
     private static final String DATA_SOURCE_NAME = "wormbaseAcedbFileconverter"; //"Add DataSource.name here";
@@ -62,7 +63,7 @@ public class WormbaseAcedbConverter extends BioFileConverter
     // Key: "className:id", Value: Item ID (ex: "4_1")
 	private HashMap<String, Item> storedRefItems; 
 	
-	private HashMap<String, String> keyMapping; // the primary key for each class TODO for debugging
+	private HashMap<String, String> keyMapping; // the primary key for each class
 	
     /**
      * Constructor
@@ -121,7 +122,9 @@ public class WormbaseAcedbConverter extends BioFileConverter
     				" source in the project.xml");
     	}
     	
-    	FileParser fp = new FileParser(reader);
+
+		FileWriter fw = new FileWriter(rejectFilePath);
+		FileParser fp = new FileParser(reader);
     	
     	// foreach XML string
     	String dataString;
@@ -151,17 +154,20 @@ public class WormbaseAcedbConverter extends BioFileConverter
     				doc = PackageUtils.loadXMLFrom(repairedData);
     			}catch( SAXParseException e1 ){
 	    			try{
-		    			FileWriter fw = new FileWriter(errorFilePath);
-	//	    			fw.write("FILE BEGINNING\n");
+	    				WMDebug.debug("### SANITATION FAILED: ADDING RECORD TO REJECTS FILE ###");
+	    				
+	    				// Add to rejects file
+		    			fw.write("==============================================\n");
+		    			System.out.println("Original error: "+e.getMessage());
+		    			fw.write("\n");
+		    			System.out.println("Post sanitation: "+e1.getMessage());
+		    			fw.write("\n\n");
 		    			fw.write(dataString);
-		    			fw.close();
 	    			}catch( Exception e2 ){
 	    				System.out.println("Something wrong with the FileWriter");
 	    				throw e2;
 	    			}
-	    			System.out.println(e.getMessage());
-	    			System.out.println(e1.getMessage());
-	    			throw e1;
+	    			continue;
     			}
     		}
 			
@@ -308,7 +314,8 @@ public class WormbaseAcedbConverter extends BioFileConverter
     		WMDebug.debug("Storing item:["+keySet.getKey()+"]");
     		store(keySet.getValue());
     	}
-    	
+    
+    	fw.close();
     }
     
     /**
@@ -375,10 +382,10 @@ public class WormbaseAcedbConverter extends BioFileConverter
 		if(rrd == null){
 			WMDebug.debug("Unidirectional, no reverse reference");
 		}else{
-			WMDebug.debug(String.format(
-					"Setting (%s)%s.%s= current item", 
-					rd.getName(), rd.getReferencedClassName(), 
-					rrd.getName()));
+//			WMDebug.debug(String.format(
+//					"Setting (%s)%s.%s= current item", 
+//					rd.getName(), rd.getReferencedClassName(), 
+//					rrd.getName()));
 			referencedItem.setReference(rrd.getName(), currentItem);
 		}
     }
