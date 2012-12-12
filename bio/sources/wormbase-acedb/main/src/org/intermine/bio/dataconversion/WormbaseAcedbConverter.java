@@ -12,6 +12,7 @@ package org.intermine.bio.dataconversion;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Enumeration;
@@ -36,6 +37,7 @@ import org.intermine.util.TypeUtil;
 import org.intermine.xml.full.Item;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXParseException;
 
 import wormbase.model.parser.*;
 
@@ -46,7 +48,10 @@ import wormbase.model.parser.*;
 public class WormbaseAcedbConverter extends BioFileConverter
 {
     
-    private static final String DATASET_TITLE = "wormbaseAcedb"; //"Add DataSet.title here";
+	private final String currentClass = "Gene"; 
+	private final String errorFilePath = "/home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/wbconverter_error.txt";
+
+	private static final String DATASET_TITLE = "wormbaseAcedb"; //"Add DataSet.title here";
     private static final String DATA_SOURCE_NAME = "wormbaseAcedbFileconverter"; //"Add DataSource.name here";
 
     private DataMapper dataMapping = null;
@@ -57,8 +62,6 @@ public class WormbaseAcedbConverter extends BioFileConverter
     // Key: "className:id", Value: Item ID (ex: "4_1")
 	private HashMap<String, Item> storedRefItems; 
 	
-
-	private String currentClass = "Gene"; // TODO set to gene for now
 	private HashMap<String, String> keyMapping; // the primary key for each class TODO for debugging
 	
     /**
@@ -122,10 +125,45 @@ public class WormbaseAcedbConverter extends BioFileConverter
     	
     	// foreach XML string
     	String dataString;
+    	int count=0; // 
     	while( (dataString = fp.getDataString()) != null ){
 		
-			// Load XML into org.w3c.dom.Document 
-			Document doc = PackageUtils.loadXMLFrom(dataString);
+    		count++;
+    		
+//    		if(count < 1070){
+//    			System.out.println(String.valueOf(count)+":"+dataString.length());
+//    			continue;
+//    		}
+    		
+    		Document doc;
+    		try{
+				// Load XML into org.w3c.dom.Document 
+				doc = PackageUtils.loadXMLFrom(dataString);
+    		}catch(SAXParseException e){
+    			try{
+    				/*
+    				 * Possible error sources:
+    				 *  "<2_poinnt>"
+    				 *  unescaped '&', '<', or '>' inside of tags
+    				 */
+    				WMDebug.debug("CALLING XML SANITATION FUNCTION");
+    				String repairedData = PackageUtils.sanitizeXMLTags(dataString);
+    				doc = PackageUtils.loadXMLFrom(repairedData);
+    			}catch( SAXParseException e1 ){
+	    			try{
+		    			FileWriter fw = new FileWriter(errorFilePath);
+	//	    			fw.write("FILE BEGINNING\n");
+		    			fw.write(dataString);
+		    			fw.close();
+	    			}catch( Exception e2 ){
+	    				System.out.println("Something wrong with the FileWriter");
+	    				throw e2;
+	    			}
+	    			System.out.println(e.getMessage());
+	    			System.out.println(e1.getMessage());
+	    			throw e1;
+    			}
+    		}
 			
 		    // Get XPathFactory
 	        XPathFactory xpf = XPathFactory.newInstance();
