@@ -130,11 +130,13 @@
 -->
 	
 	
-	<!-- WormBase aceDB data loader -->
+	<!-- WormBase aceDB data loader.  Base dir is wormmine/integrate -->
 	<source name="wb-acedb" type="wormbase-acedb">
-		<property name="src.data.file" location="&datadir;/wormbase-acedb/XML" />
+		<property name="src.data.dir" location="&datadir;/wormbase-acedb/XML" />
 		<property name="mapping.file"	
 			value="&datadir;/wormbase-acedb/mapping/wormbase-acedb.properties"/> 
+		<property name="keyz.file" 
+			value="../../bio/sources/wormbase-acedb/resources/wormbase-acedb_keys.properties"/>
 		
 	</source> 
 	

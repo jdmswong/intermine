@@ -75,11 +75,10 @@ public class WormbaseAcedbConverter extends BioFileConverter
         
         WMDebug.debug("Constructor called");
         
-        // keyMapping hash block for debugging
-        keyMapping = new HashMap<String, String>();
-        keyMapping.put("Organism", "name"); 
-        keyMapping.put("Transcript", "primaryIdentifier"); 
-        // end keyMapping hash block
+//        // keyMapping hash block for debugging
+//        keyMapping.put("Organism", "name"); 
+//        keyMapping.put("Transcript", "primaryIdentifier"); 
+//        // end keyMapping hash block
         
         storedRefItems = new HashMap<String, Item>();
         model = _model;
@@ -117,8 +116,13 @@ public class WormbaseAcedbConverter extends BioFileConverter
     public void process(Reader reader) throws Exception {
     	WMDebug.debug("started WormbaseAcedbConverter.process()"); 
     	
+    	// Checking for properties
     	if( dataMapping == null ){
     		throw new Exception("mapping.file property not defined for this"+
+    				" source in the project.xml");
+    	}
+    	if( keyMapping == null){
+    		throw new Exception("key.file property not defined for this"+
     				" source in the project.xml");
     	}
     	
@@ -268,7 +272,8 @@ public class WormbaseAcedbConverter extends BioFileConverter
 			        		
 			        		
 			        	}else{
-			        		// TODO THROW something here 
+			        		throw new Exception(dataPath+" contains a '.', "+
+			        				"but is not a reference or collection");
 			        	}
 			        	
 
@@ -303,6 +308,9 @@ public class WormbaseAcedbConverter extends BioFileConverter
 	        WMDebug.debug("Storing "+currentClass+" with ID:"+ID);
 	        store(item);
 	    	
+	        // TODO remove
+	        WMDebug.debug("STOP AFTER ONE GENE FOR TESTING");
+	        break;
     	}
     	
     	WMDebug.debug("==== Flushing cached reference items ====");
@@ -316,6 +324,8 @@ public class WormbaseAcedbConverter extends BioFileConverter
     	}
     
     	fw.close();
+    	
+//    	throw new Exception("woops... HAHAHAHAHA"); // TODO remove
     }
     
     /**
@@ -342,21 +352,33 @@ public class WormbaseAcedbConverter extends BioFileConverter
 			WMDebug.debug("new " + className + " object:" + pID);
 			referencedItem = createItem(className);
 
-			if (keyMapping.containsKey(className)) {
-				referencedItem.setAttribute(keyMapping.get(className),
-						pID);
-			} else {
-				throw new Exception(
-						"keyMapping hash has no \"class key value\" for "
-								+ className);
-			}
-
+			referencedItem.setAttribute(getClassPIDField(className), pID);
+			
 			storedRefItems.put(className+":"+pID, referencedItem);
 		}
 
 		return referencedItem;
 	}
+	
+	// TODO configure two part keys
+	public String getClassPIDField(String className) throws Exception{
+		if (keyMapping.containsKey(className)) {
+			return keyMapping.get(className);
+		} 
+		
+		throw new Exception(
+				"keyMapping hash has no \"class key value\" for "
+				+ className);
+	}
 
+	/**
+	 * This method is automatically called if "mapping.file" property set 
+	 * for source in project XML.
+	 * 
+	 * Reads InterMine to AceXML data mapping configuration file
+	 * @param mappingFile 
+	 * @throws Exception
+	 */
     public void setMappingFile(String mappingFile) throws Exception{
         dataMapping = new DataMapper();
     	try {
@@ -366,6 +388,47 @@ public class WormbaseAcedbConverter extends BioFileConverter
 			throw e;
 		}
     	System.out.println("Processed mapping file: "+mappingFile);
+    }
+    
+    /**
+	 * This method is automatically called if "key.file" property set 
+	 * for source in project XML.
+	 * 
+	 * Reads key/value file loader will use.
+	 * File must be in the format
+	 * 
+	 * className.key = value
+	 * 
+	 * For example:
+	 * BioEntity.key = primaryIdentifier
+	 * This line will set the primaryIdentifier field as primary key
+	 * for all children of BioEntity.  Precedence granted to more
+	 * specific keys.
+	 * 
+     * @param keyFilePath
+     * @throws Exception
+     */
+    public void setKeyFile(String keyFilePath) throws Exception{
+        keyMapping = new HashMap<String, String>();
+    	Properties keyFileProps = new Properties();
+    	try{
+	    	keyFileProps.load(new FileReader(keyFilePath));
+    	}catch(Exception e){
+    		System.out.println("Problem loading keyfile:["+keyFilePath+"]");
+    		e.printStackTrace();
+    		throw e;
+    	}
+    	Enumeration keyEnum = keyFileProps.keys();
+    	while( keyEnum.hasMoreElements() ){
+    		String key = (String) keyEnum.nextElement();
+    		int index = key.indexOf(".key");
+			if(index > 0){
+    			keyMapping.put( key.substring(0, index), 
+    							keyFileProps.getProperty(key));
+    			
+    		}
+    	}
+    	System.out.println("Processed key file: ["+keyFilePath+"]");
     }
     
     /**
