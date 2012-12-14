@@ -46,7 +46,7 @@ library.-init-deps:
 [dependencies]  bio/core/main
 [dependencies]  wormmine/dbmodel
 [dependencies] ---------------------------------------------------
-[dependencies] Thu Dec 13 17:46:03 EST 2012
+[dependencies] Fri Dec 14 16:04:05 EST 2012
 [dependencies] Executing "jar" for source "intermine/objectstore/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/objectstore/main
 Detected Java version: 1.6 in: /usr/lib/jvm/java-6-sun-1.6.0.26/jre
 Detected OS: Linux
@@ -751,7 +751,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/objectstore/main/build.xml.
-[dependencies] Thu Dec 13 17:46:04 EST 2012
+[dependencies] Fri Dec 14 16:04:05 EST 2012
 [dependencies] Executing "jar" for source "intermine/integrate/model/fulldata"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/integrate/model/fulldata
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -959,7 +959,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/integrate/model/fulldata/build.xml.
-[dependencies] Thu Dec 13 17:46:05 EST 2012
+[dependencies] Fri Dec 14 16:04:06 EST 2012
 [dependencies] Executing "jar" for source "intermine/integrate/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/integrate/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -1242,7 +1242,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/integrate/main/build.xml.
-[dependencies] Thu Dec 13 17:46:05 EST 2012
+[dependencies] Fri Dec 14 16:04:06 EST 2012
 [dependencies] Executing "jar" for source "intermine/api/model/userprofile"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/api/model/userprofile
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -1454,7 +1454,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/api/model/userprofile/build.xml.
-[dependencies] Thu Dec 13 17:46:06 EST 2012
+[dependencies] Fri Dec 14 16:04:07 EST 2012
 [dependencies] Executing "jar" for source "intermine/pathquery/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/pathquery/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -1681,7 +1681,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/pathquery/main/build.xml.
-[dependencies] Thu Dec 13 17:46:06 EST 2012
+[dependencies] Fri Dec 14 16:04:07 EST 2012
 [dependencies] Executing "jar" for source "intermine/webservice/client/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/webservice/client/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -1939,7 +1939,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/webservice/client/main/build.xml.
-[dependencies] Thu Dec 13 17:46:06 EST 2012
+[dependencies] Fri Dec 14 16:04:07 EST 2012
 [dependencies] Executing "jar" for source "intermine/api/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/api/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -2480,7 +2480,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/api/main/build.xml.
-[dependencies] Thu Dec 13 17:46:07 EST 2012
+[dependencies] Fri Dec 14 16:04:08 EST 2012
 [dependencies] Executing "jar" for source "bio/core/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../bio/core/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -2744,7 +2744,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/bio/core/main/build.xml.
-[dependencies] Thu Dec 13 17:46:07 EST 2012
+[dependencies] Fri Dec 14 16:04:08 EST 2012
 [dependencies] Executing "jar" for source "wormmine/dbmodel"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../wormmine/dbmodel
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -2859,9 +2859,9 @@ library.-init-generate:
 -pre-define-task-classpath:
     [mkdir] Skipping /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build/main because it already exists.
    [delete] Deleting directory /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build/tmp
+   [delete] Deleting /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build/tmp/schema7928371720279692009xml.sql
    [delete] Deleting /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build/tmp/report.sql.generation
    [delete] Deleting /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build/tmp/sqldb.map
-   [delete] Deleting /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build/tmp/schema1894409411468180144xml.sql
    [delete] Deleting directory /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build/tmp
     [mkdir] Created dir: /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build/tmp
      [copy] /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/task.log4j.properties omitted as /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build/main/log4j.properties is up to date.
@@ -3720,7 +3720,7 @@ library.-init-deps:
 [integrate]  wormmine/dbmodel
 [integrate]  bio/sources/wormbase-acedb/main
 [integrate] ---------------------------------------------------
-[integrate] Thu Dec 13 17:46:13 EST 2012
+[integrate] Fri Dec 14 16:04:14 EST 2012
 [integrate] Executing "jar" for source "intermine/objectstore/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/objectstore/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -4428,7 +4428,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/objectstore/main/build.xml.
-[integrate] Thu Dec 13 17:46:14 EST 2012
+[integrate] Fri Dec 14 16:04:14 EST 2012
 [integrate] Executing "jar" for source "intermine/integrate/model/fulldata"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/integrate/model/fulldata
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -4658,7 +4658,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/integrate/model/fulldata/build.xml.
-[integrate] Thu Dec 13 17:46:14 EST 2012
+[integrate] Fri Dec 14 16:04:15 EST 2012
 [integrate] Executing "jar" for source "intermine/integrate/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/integrate/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -4942,7 +4942,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/integrate/main/build.xml.
-[integrate] Thu Dec 13 17:46:15 EST 2012
+[integrate] Fri Dec 14 16:04:15 EST 2012
 [integrate] Executing "jar" for source "intermine/api/model/userprofile"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/api/model/userprofile
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -5176,7 +5176,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/api/model/userprofile/build.xml.
-[integrate] Thu Dec 13 17:46:15 EST 2012
+[integrate] Fri Dec 14 16:04:16 EST 2012
 [integrate] Executing "jar" for source "intermine/pathquery/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/pathquery/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -5404,7 +5404,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/pathquery/main/build.xml.
-[integrate] Thu Dec 13 17:46:15 EST 2012
+[integrate] Fri Dec 14 16:04:16 EST 2012
 [integrate] Executing "jar" for source "intermine/webservice/client/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/webservice/client/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -5663,7 +5663,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/webservice/client/main/build.xml.
-[integrate] Thu Dec 13 17:46:16 EST 2012
+[integrate] Fri Dec 14 16:04:16 EST 2012
 [integrate] Executing "jar" for source "intermine/api/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/api/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -6205,7 +6205,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/api/main/build.xml.
-[integrate] Thu Dec 13 17:46:16 EST 2012
+[integrate] Fri Dec 14 16:04:16 EST 2012
 [integrate] Executing "jar" for source "bio/core/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../bio/core/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -6470,7 +6470,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/bio/core/main/build.xml.
-[integrate] Thu Dec 13 17:46:16 EST 2012
+[integrate] Fri Dec 14 16:04:17 EST 2012
 [integrate] Executing "jar" for source "wormmine/dbmodel"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../wormmine/dbmodel
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -7358,7 +7358,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build.xml.
-[integrate] Thu Dec 13 17:46:19 EST 2012
+[integrate] Fri Dec 14 16:04:20 EST 2012
 [integrate] Executing "jar" for source "bio/sources/wormbase-acedb/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../bio/sources/wormbase-acedb/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -7592,6 +7592,26 @@ build-db-tgt-items:
 [integrate] Processed mapping file: ../../datadir/wormbase-acedb/mapping/wormbase-acedb.properties
 [integrate] Processing file: /home/jdmswong/website-intermine/acedb-dev/intermine/datadir/wormbase-acedb/XML/Gene.xml
 [integrate] JDJDJD:: started WormbaseAcedbConverter.process()
+[integrate] JDJDJD:: Processing property:[strains.primaryIdentifier]
+[integrate] JDJDJD:: This is a collection
+[integrate] JDJDJD:: 1:N
+[integrate] JDJDJD:: new Strain object:DR2278
+[integrate] JDJDJD:: strains:[DR2278]
+[integrate] JDJDJD:: new Strain object:RB552
+[integrate] JDJDJD:: strains:[RB552]
+[integrate] JDJDJD:: =======================
+[integrate] JDJDJD:: Processing property:[transcripts.primaryIdentifier]
+[integrate] JDJDJD:: This is a collection
+[integrate] JDJDJD:: 1:N
+[integrate] JDJDJD:: new Transcript object:Y110A7A.10.1
+[integrate] JDJDJD:: transcripts:[Y110A7A.10.1]
+[integrate] JDJDJD:: new Transcript object:Y110A7A.10.2
+[integrate] JDJDJD:: transcripts:[Y110A7A.10.2]
+[integrate] JDJDJD:: =======================
+[integrate] JDJDJD:: Processing property:[operon]
+[integrate] JDJDJD:: This is an attribute
+[integrate] JDJDJD:: Setting attribute [operon] to [CEOP1906]
+[integrate] JDJDJD:: =======================
 [integrate] JDJDJD:: Processing property:[alleles.primaryIdentifier]
 [integrate] JDJDJD:: This is a collection
 [integrate] JDJDJD:: 1:N
@@ -7648,33 +7668,53 @@ build-db-tgt-items:
 [integrate] JDJDJD:: This is an attribute
 [integrate] JDJDJD:: Setting attribute [primaryIdentifier] to [WBGene00000001]
 [integrate] JDJDJD:: =======================
+[integrate] JDJDJD:: Processing property:[symbol]
+[integrate] JDJDJD:: This is an attribute
+[integrate] JDJDJD:: Setting attribute [symbol] to [aap-1]
+[integrate] JDJDJD:: =======================
+[integrate] JDJDJD:: Processing property:[organism.name]
+[integrate] JDJDJD:: This is a reference
+[integrate] JDJDJD:: new Organism object:Caenorhabditis elegans
+[integrate] JDJDJD:: Setting current Gene.organism to: (Organism)[Caenorhabditis elegans]
+[integrate] JDJDJD:: N:1
+[integrate] JDJDJD:: Unidirectional, no reverse reference
+[integrate] JDJDJD:: =======================
+[integrate] JDJDJD:: Processing property:[secondaryIdentifier]
+[integrate] JDJDJD:: This is an attribute
+[integrate] JDJDJD:: Setting attribute [secondaryIdentifier] to [aap-1]
+[integrate] JDJDJD:: =======================
 [integrate] JDJDJD:: Storing Gene with ID:WBGene00000001
 [integrate] JDJDJD:: STOP AFTER ONE GENE FOR TESTING
 [integrate] JDJDJD:: ==== Flushing cached reference items ====
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00249743]
-[integrate] JDJDJD:: Storing item:[Allele:WBVar01282685]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00333794]
+[integrate] JDJDJD:: Storing item:[Organism:Caenorhabditis elegans]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00333795]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00333793]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00333798]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00333796]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00333797]
+[integrate] JDJDJD:: Storing item:[Transcript:Y110A7A.10.1]
+[integrate] JDJDJD:: Storing item:[Transcript:Y110A7A.10.2]
+[integrate] JDJDJD:: Storing item:[Allele:WBVar00636147]
+[integrate] JDJDJD:: Storing item:[Allele:WBVar00636148]
+[integrate] JDJDJD:: Storing item:[Allele:WBVar00636146]
+[integrate] JDJDJD:: Storing item:[Allele:WBVar00636149]
+[integrate] JDJDJD:: Storing item:[Allele:WBVar01282685]
+[integrate] JDJDJD:: Storing item:[Strain:DR2278]
+[integrate] JDJDJD:: Storing item:[Strain:RB552]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00636150]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00636151]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00636152]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00636153]
-[integrate] JDJDJD:: Storing item:[Allele:WBVar00636154]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00088761]
+[integrate] JDJDJD:: Storing item:[Allele:WBVar00636154]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00636155]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00636156]
-[integrate] JDJDJD:: Storing item:[Allele:WBVar00636147]
-[integrate] JDJDJD:: Storing item:[Allele:WBVar00636148]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00091581]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00636157]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00636158]
-[integrate] JDJDJD:: Storing item:[Allele:WBVar00636146]
 [integrate] JDJDJD:: Storing item:[Allele:WBVar00636159]
-[integrate] JDJDJD:: Storing item:[Allele:WBVar00636149]
 [integrate] ALTER TABLE reference ALTER refid SET STATISTICS 1000
 [integrate] ANALYSE
 
@@ -7809,8 +7849,8 @@ Skipped because property 'release' not set.
 -pre-define-task-classpath:
     [mkdir] Skipping /home/jdmswong/website-intermine/acedb-dev/intermine/bio/sources/wormbase-acedb/build/main because it already exists.
    [delete] Deleting directory /home/jdmswong/website-intermine/acedb-dev/intermine/bio/sources/wormbase-acedb/build/tmp
+   [delete] Deleting /home/jdmswong/website-intermine/acedb-dev/intermine/bio/sources/wormbase-acedb/build/tmp/schema8502818117886799452xml.sql
    [delete] Deleting /home/jdmswong/website-intermine/acedb-dev/intermine/bio/sources/wormbase-acedb/build/tmp/report.sql.generation
-   [delete] Deleting /home/jdmswong/website-intermine/acedb-dev/intermine/bio/sources/wormbase-acedb/build/tmp/schema7253151214027847783xml.sql
    [delete] Deleting /home/jdmswong/website-intermine/acedb-dev/intermine/bio/sources/wormbase-acedb/build/tmp/sqldb.map
    [delete] Deleting directory /home/jdmswong/website-intermine/acedb-dev/intermine/bio/sources/wormbase-acedb/build/tmp
     [mkdir] Created dir: /home/jdmswong/website-intermine/acedb-dev/intermine/bio/sources/wormbase-acedb/build/tmp
@@ -7850,7 +7890,7 @@ library.-init-deps:
 [integrate]  wormmine/dbmodel
 [integrate]  bio/sources/wormbase-acedb/main
 [integrate] ---------------------------------------------------
-[integrate] Thu Dec 13 17:46:24 EST 2012
+[integrate] Fri Dec 14 16:04:24 EST 2012
 [integrate] Executing "jar" for source "intermine/objectstore/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/objectstore/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -8558,7 +8598,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/objectstore/main/build.xml.
-[integrate] Thu Dec 13 17:46:25 EST 2012
+[integrate] Fri Dec 14 16:04:25 EST 2012
 [integrate] Executing "jar" for source "intermine/integrate/model/fulldata"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/integrate/model/fulldata
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -8788,7 +8828,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/integrate/model/fulldata/build.xml.
-[integrate] Thu Dec 13 17:46:25 EST 2012
+[integrate] Fri Dec 14 16:04:25 EST 2012
 [integrate] Executing "jar" for source "intermine/integrate/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/integrate/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -9072,7 +9112,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/integrate/main/build.xml.
-[integrate] Thu Dec 13 17:46:25 EST 2012
+[integrate] Fri Dec 14 16:04:25 EST 2012
 [integrate] Executing "jar" for source "intermine/api/model/userprofile"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/api/model/userprofile
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -9306,7 +9346,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/api/model/userprofile/build.xml.
-[integrate] Thu Dec 13 17:46:26 EST 2012
+[integrate] Fri Dec 14 16:04:26 EST 2012
 [integrate] Executing "jar" for source "intermine/pathquery/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/pathquery/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -9534,7 +9574,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/pathquery/main/build.xml.
-[integrate] Thu Dec 13 17:46:26 EST 2012
+[integrate] Fri Dec 14 16:04:26 EST 2012
 [integrate] Executing "jar" for source "intermine/webservice/client/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/webservice/client/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -9793,7 +9833,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/webservice/client/main/build.xml.
-[integrate] Thu Dec 13 17:46:26 EST 2012
+[integrate] Fri Dec 14 16:04:26 EST 2012
 [integrate] Executing "jar" for source "intermine/api/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../intermine/api/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -10335,7 +10375,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/intermine/api/main/build.xml.
-[integrate] Thu Dec 13 17:46:27 EST 2012
+[integrate] Fri Dec 14 16:04:27 EST 2012
 [integrate] Executing "jar" for source "bio/core/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../bio/core/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -10600,7 +10640,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/bio/core/main/build.xml.
-[integrate] Thu Dec 13 17:46:27 EST 2012
+[integrate] Fri Dec 14 16:04:27 EST 2012
 [integrate] Executing "jar" for source "wormmine/dbmodel"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../wormmine/dbmodel
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -11488,7 +11528,7 @@ do-jar:
 
 jar:
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/dbmodel/build.xml.
-[integrate] Thu Dec 13 17:46:29 EST 2012
+[integrate] Fri Dec 14 16:04:29 EST 2012
 [integrate] Executing "jar" for source "bio/sources/wormbase-acedb/main"  in directory: /home/jdmswong/website-intermine/acedb-dev/intermine/imbuild/../bio/sources/wormbase-acedb/main
  [property] Override ignored for no.dep
  [property] Override ignored for extra.project.dependencies
@@ -11711,6 +11751,9 @@ load:
 [integrate] Creating index: CREATE INDEX DataSet__key ON DataSet (name)
 [integrate] Creating index: CREATE INDEX DataSource__key ON DataSource (name)
 [integrate] Creating index: CREATE INDEX Ontology__key ON Ontology (name)
+[integrate] Creating index: CREATE INDEX Organism__key ON Organism (name)
+[integrate] Creating index: CREATE INDEX Strain__key ON Strain (primaryIdentifier)
+[integrate] Creating index: CREATE INDEX Transcript__key ON Transcript (primaryIdentifier)
      [null] Exiting /home/jdmswong/website-intermine/acedb-dev/intermine/bio/sources/wormbase-acedb/build.xml.
 
 do-action:
@@ -11722,4 +11765,4 @@ action:
 default:
 
 BUILD SUCCESSFUL
-Total time: 29 seconds
+Total time: 28 seconds

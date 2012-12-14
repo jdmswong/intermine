@@ -15,6 +15,7 @@
 		<reference name="gene" referenced-type="Gene" reverse-reference="strains"/>
 	</class>
 	<class name="Gene" is-interface="true">
+		<attribute name="operon" type="java.lang.String"/>
 		<collection name="strains" referenced-type="Strain" reverse-reference="gene"/>
 	</class>
 
