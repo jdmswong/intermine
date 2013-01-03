@@ -18,10 +18,8 @@ import java.io.Reader;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.Set;
 import java.util.regex.*;
 
 import javax.xml.xpath.XPath;
@@ -30,7 +28,6 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.xpath.NodeSet;
 import org.intermine.dataconversion.*;
 import org.intermine.metadata.*;
 import org.intermine.util.TypeUtil;
@@ -308,9 +305,10 @@ public class WormbaseAcedbConverter extends BioFileConverter
 	        WMDebug.debug("Storing "+currentClass+" with ID:"+ID);
 	        store(item);
 	    	
-	        // TODO remove
-	        WMDebug.debug("STOP AFTER ONE GENE FOR TESTING");
-	        break;
+	        if(count == 100){
+		        WMDebug.debug("STOP AFTER 100 GENES FOR TESTING");
+		        break;
+	        }
     	}
     	
     	WMDebug.debug("==== Flushing cached reference items ====");
@@ -325,7 +323,6 @@ public class WormbaseAcedbConverter extends BioFileConverter
     
     	fw.close();
     	
-//    	throw new Exception("woops... HAHAHAHAHA"); // TODO remove
     }
     
     /**
