@@ -1,4 +1,5 @@
 *~
+*.jace
 
 bin/
 dist/

@@ -26,11 +26,12 @@ public class FileParser {
 	
 	
 	/**
-	 * @param args
+	 * Creates a FileParser for given input file.
+	 * @param inputFile Path to input file 
 	 * @throws IOException 
 	 */
-	public FileParser(String jaceFile) throws IOException {
- 		inputStream = new MyBufferedReader(new FileReader(jaceFile));
+	public FileParser(String inputFile) throws IOException {
+ 		inputStream = new MyBufferedReader(new FileReader(inputFile));
 	}
 	
 	public FileParser(Reader reader) throws IOException {
@@ -73,12 +74,33 @@ public class FileParser {
 		} finally {
             if (line == null) {
             	inputStream.close();
-            	return null;
+            	
             }
-            //System.out.println(""); // DEBUG
+            
 		}
 
 		return lines.toArray(new String[lines.size()]);
+	}
+	
+	/**
+	 * Wrapper for getDataObj(), concatenates each string instead of returning
+	 * an array of strings
+	 * @return 
+	 * @throws IOException 
+	 */
+	public String getDataString() throws IOException{
+		String[] lines = getDataObj();
+		if(lines == null | lines.length == 0){
+			return null;
+		}
+		
+		String resultLine = "";
+		String separator = "";
+		for(int i=0; i<lines.length; i++){
+		    resultLine = resultLine + separator + lines[i];  
+		}
+		
+		return resultLine;
 	}
 	
 	/**

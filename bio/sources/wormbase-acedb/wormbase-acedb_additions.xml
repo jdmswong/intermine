@@ -3,12 +3,23 @@
 
 <classes>
 <!-- add any <class> elements here -->
-	<!--<class name="SNP" extends="SequenceFeature" is-interface="true">
-		
-	</class>-->
-	<class name="SampleClass" is-interface="true">
+<!--
+	<class name="SampleClass" extends="someclass" is-interface="true">
 		<attribute name="name" type="java.lang.String"/>
 		<attribute name="type" type="java.lang.String"/>
+		<reference name="gene" referenced-type="Gene" reverse-reference="exons"/>
+		<collection name="transcripts" referenced-type="Transcript" reverse-reference="exons"/>
 	</class>
-
+-->
+	<class name="Strain" extends="SequenceFeature" is-interface="true">
+		<reference name="gene" referenced-type="Gene" reverse-reference="strains"/>
+	</class>
+	<class name="Gene" is-interface="true">
+		<attribute name="operon" type="java.lang.String"/>
+		<collection name="strains" referenced-type="Strain" reverse-reference="gene"/>
+	</class>
+	<class name="BioEntity" is-interface="true">
+		<attribute name="lastUpdated" type="java.util.Date"/>
+		<!--<reference name="curatedBy" referenced-type="Curator" reverse-reference="entitiesCurated"/>-->
+	</class>
 </classes>

@@ -10,14 +10,31 @@ package org.intermine.bio.dataconversion;
  *
  */
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.regex.*;
+
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.lang.StringUtils;
 import org.intermine.dataconversion.*;
-import org.intermine.metadata.Model;
+import org.intermine.metadata.*;
+import org.intermine.util.TypeUtil;
 import org.intermine.xml.full.Item;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXParseException;
 
 import wormbase.model.parser.*;
 
@@ -28,18 +45,64 @@ import wormbase.model.parser.*;
 public class WormbaseAcedbConverter extends BioFileConverter
 {
     
-    private static final String DATASET_TITLE = "wormbaseAcedb"; //"Add DataSet.title here";
+	private final String currentClass = "Gene"; 
+	private final String errorFilePath = "/home/jdmswong/website-intermine/acedb-dev/intermine/wormmine/wbconverter_error.txt";
+	private final String rejectFilePath = "/home/jdmswong/intermine/datadir/wormbase-acedb/wormbase-acedb-rejects.xml";
+
+	private static final String DATASET_TITLE = "wormbaseAcedb"; //"Add DataSet.title here";
     private static final String DATA_SOURCE_NAME = "wormbaseAcedbFileconverter"; //"Add DataSource.name here";
 
-	private FileParser fp;
-
+    private DataMapper dataMapping = null;
+    private Model model;
+    private ClassDescriptor classCD; // CD of current data type being processed 
+    
+    // Items that have already been referenced and stored
+    // Key: "className:id", Value: Item ID (ex: "4_1")
+	private HashMap<String, Item> storedRefItems; 
+	
+	private HashMap<String, String> keyMapping; // the primary key for each class
+	
     /**
      * Constructor
      * @param writer the ItemWriter used to handle the resultant items
      * @param model the Model
      */
-    public WormbaseAcedbConverter(ItemWriter writer, Model model) {
-        super(writer, model, DATA_SOURCE_NAME, DATASET_TITLE);
+    public WormbaseAcedbConverter(ItemWriter writer, Model _model) {
+        super(writer, _model, DATA_SOURCE_NAME, DATASET_TITLE);
+        
+        WMDebug.debug("Constructor called");
+        
+//        // keyMapping hash block for debugging
+//        keyMapping.put("Organism", "name"); 
+//        keyMapping.put("Transcript", "primaryIdentifier"); 
+//        // end keyMapping hash block
+        
+        storedRefItems = new HashMap<String, Item>();
+        model = _model;
+        
+        classCD = model.getClassDescriptorByName(currentClass);
+        
+//        // Begin debug code
+//        ClassDescriptor geneCD = model.getClassDescriptorByName("Gene");
+//        
+//        
+//        String label[] = {
+//        		"Gene attrs",
+//        		"Gene refs",
+//        		"Gene colls",
+//        		"Gene fields"
+//        		};
+//        String value[] = {
+//        		geneCD.getAllAttributeDescriptors().toString(),
+//        		geneCD.getAllReferenceDescriptors().toString(),
+//        		geneCD.getAllCollectionDescriptors().toString(),
+//        		geneCD.getAllFieldDescriptors().toString()
+//        		};
+//        for(int i=0; i<label.length; i++){
+//        	System.out.printf("[%s]\t[%s]\n",label[i],value[i]);
+//        }
+//        // end debug code
+        
     }
 
     /**
@@ -48,43 +111,358 @@ public class WormbaseAcedbConverter extends BioFileConverter
      * {@inheritDoc}
      */
     public void process(Reader reader) throws Exception {
-    	WMDebug.debug("started WormbaseAcedbConverter.process()");
-    	fp = new FileParser(reader);
+    	WMDebug.debug("started WormbaseAcedbConverter.process()"); 
     	
-    	String[] dataChunk;
-		
-		// Get store each WormBase gene ID
-		while( (dataChunk = fp.getDataObj()) != null ){ 
-			//WMDebug.debug(dataChunk[0]);  // DEBUG
-			
-			String firstLine = dataChunk[0];
-			String[] spaceTokens = firstLine.split("\\s+");
-			
-			String[] qtokens = spaceTokens[0].split("\\?",0);
-			
-			String type = qtokens[1];
-			String ID = qtokens[2];
+    	// Checking for properties
+    	if( dataMapping == null ){
+    		throw new Exception("mapping.file property not defined for this"+
+    				" source in the project.xml");
+    	}
+    	if( keyMapping == null){
+    		throw new Exception("key.file property not defined for this"+
+    				" source in the project.xml");
+    	}
+    	
 
-			Item item = createItem(type);
-			if (!StringUtils.isEmpty(ID)) {
-				item.setAttribute("primaryIdentifier", ID);
-			}
+		FileWriter fw = new FileWriter(rejectFilePath);
+		FileParser fp = new FileParser(reader);
+    	
+    	// foreach XML string
+    	String dataString;
+    	int count=0; // 
+    	while( (dataString = fp.getDataString()) != null ){
+		
+    		count++;
+    		
+//    		if(count < 1070){
+//    			System.out.println(String.valueOf(count)+":"+dataString.length());
+//    			continue;
+//    		}
+    		
+    		Document doc;
+    		try{
+				// Load XML into org.w3c.dom.Document 
+				doc = PackageUtils.loadXMLFrom(dataString);
+    		}catch(SAXParseException e){
+    			try{
+    				/*
+    				 * Possible error sources:
+    				 *  "<2_poinnt>"
+    				 *  unescaped '&', '<', or '>' inside of tags
+    				 */
+    				WMDebug.debug("CALLING XML SANITATION FUNCTION");
+    				String repairedData = PackageUtils.sanitizeXMLTags(dataString);
+    				doc = PackageUtils.loadXMLFrom(repairedData);
+    			}catch( SAXParseException e1 ){
+	    			try{
+	    				WMDebug.debug("### SANITATION FAILED: ADDING RECORD TO REJECTS FILE ###");
+	    				
+	    				// Add to rejects file
+		    			fw.write("==============================================\n");
+		    			System.out.println("Original error: "+e.getMessage());
+		    			fw.write("\n");
+		    			System.out.println("Post sanitation: "+e1.getMessage());
+		    			fw.write("\n\n");
+		    			fw.write(dataString);
+	    			}catch( Exception e2 ){
+	    				System.out.println("Something wrong with the FileWriter");
+	    				throw e2;
+	    			}
+	    			continue;
+    			}
+    		}
 			
+		    // Get XPathFactory
+	        XPathFactory xpf = XPathFactory.newInstance();
+	        XPath xpath = xpf.newXPath();
+	    	
+	        // Get enumerator of InterMine datapaths to map (ex: primaryIdentifier)
+	        Enumeration<Object> dataPathEnum = dataMapping.keys();
+	        
+	        
+	        Item item = createItem(currentClass);
+	        
+	        
+	        String dataPath;
+	        String ID = null;
+	        while( dataPathEnum.hasMoreElements() ){ // foreach property mapping
+	        	dataPath = (String) dataPathEnum.nextElement(); // ex: symbol
+	        	WMDebug.debug("Processing property:["+dataPath+"]");
+	        	String xpathQuery = dataMapping.getProperty(dataPath);
+	        	
+	        	// The XPath object compiles the XPath expression
+		        XPathExpression expr = xpath.compile( xpathQuery );
+		        
+		        
+		        // '.' indicates join, aka reference or collection
+		        if( dataPath.contains(".") ){
+		        	
+		        	
+		        	Matcher fNMatcher = Pattern.compile("(.*?)\\.").matcher(dataPath);
+		        	if( fNMatcher.find() ){
+			        	String fieldName = fNMatcher.group(1);
+			        	
+				        FieldDescriptor fd = classCD.getFieldDescriptorByName(fieldName);
+				        if( fd == null ){
+				        	throw new Exception("Type not found in model");
+				        }
+				        
+			        	ReferenceDescriptor rd = (ReferenceDescriptor) fd; 
+			        	String refClassName = 
+			        			TypeUtil.unqualifiedName(rd.getReferencedClassName());
+			        	
+			        	
+			        	if( rd.relationType() == FieldDescriptor.ONE_ONE_RELATION ||
+			        		rd.relationType() == FieldDescriptor.N_ONE_RELATION   )
+			        	{
+			        		WMDebug.debug("This is a reference");
+			        		
+				        	String xPathValue = StringUtils.strip( expr.evaluate(doc) );
+				        	Item referencedItem = getRefItem(refClassName, xPathValue);
+				        	
+				        	WMDebug.debug("Setting current "+currentClass+"."+fd.getName()+" to: ("+refClassName+")["+xPathValue+"]" );
+				        	item.setReference(rd.getName(), referencedItem.getIdentifier());
+				        	
+				        	if( 		rd.relationType() == FieldDescriptor.ONE_ONE_RELATION ){
+				        		WMDebug.debug("1:1");
+				        		// UNTESTED
+				        		setRevRefIfExists(item, referencedItem, rd);
+				        	}else if(	rd.relationType() == FieldDescriptor.N_ONE_RELATION){
+				        		WMDebug.debug("N:1");
+				        		addToRevColIfExists(item, referencedItem, rd);
+				        	}
+			        		
+			        	}else if( 	rd.relationType() == FieldDescriptor.ONE_N_RELATION ||
+			        				rd.relationType() == FieldDescriptor.M_N_RELATION   )
+			        	{
+			        		WMDebug.debug("This is a collection"); 
+			        		CollectionDescriptor cd = (CollectionDescriptor) rd;
+			        		
+			        		if( 		cd.relationType() == FieldDescriptor.ONE_N_RELATION ){
+			        			WMDebug.debug("1:N");
+			        		}else if(	cd.relationType() == FieldDescriptor.M_N_RELATION   ){
+			        			WMDebug.debug("M:N");
+			        		}
+			        		
+			        		Item referencedItem = createItem(refClassName); // Initialized by necessity
+			        		
+				        	// Get set of IDs referenced
+					        NodeList resultNodes = (NodeList) expr.evaluate(doc,  XPathConstants.NODESET);
+					        String collectionIDs[] = new String[resultNodes.getLength()]; 
+					        for(int i = 0; i < resultNodes.getLength(); i++) {
+					            collectionIDs[i] = StringUtils.strip(resultNodes.item(i).getTextContent()); 
+				        		referencedItem = getRefItem(refClassName, collectionIDs[i]);
+				        		item.addToCollection(cd.getName(), referencedItem);
+				        		
+					            WMDebug.debug(cd.getName()+":["+collectionIDs[i]+"]");
+			        		
+				        		if( 		cd.relationType() == FieldDescriptor.ONE_N_RELATION ){
+				        			setRevRefIfExists(item, referencedItem, cd);
+				        		}else if(	cd.relationType() == FieldDescriptor.M_N_RELATION   ){
+				        			WMDebug.debug("M:N");
+				        			// UNTESTED
+				        			addToRevColIfExists(item, referencedItem, rd);
+				        		}
+			        		
+					        }
+			        		
+			        		
+			        		
+			        	}else{
+			        		throw new Exception(dataPath+" contains a '.', "+
+			        				"but is not a reference or collection");
+			        	}
+			        	
+
+
+		        	}else{
+		        		throw new Exception("Matching error: ["+dataPath+"] expected to contain '.'");
+		        	}
+		        }else{
+		        	WMDebug.debug("This is an attribute");
+		        	
+		        	String xPathValue = StringUtils.strip( expr.evaluate(doc) );
+		        	
+			        if(dataPath.equals("primaryIdentifier")){
+			        	ID = xPathValue;
+			        }
+			        
+		        	// DataPath describes attribute
+					WMDebug.debug("Setting attribute ["+dataPath+"] to ["+xPathValue+"]");
+			        if (!StringUtils.isEmpty(xPathValue)) {
+						item.setAttribute(dataPath, xPathValue);
+					}
+		        	
+		        }
+		        
+		        
+		        WMDebug.debug("=======================");
+	        }
+	        
+	        if( ID == null ){
+	        	throw new Exception("InterMine ID not defined");
+	        }
+	        WMDebug.debug("Storing "+currentClass+" with ID:"+ID);
+	        store(item);
+	    	
+	        if(count == 100){
+		        WMDebug.debug("STOP AFTER 100 GENES FOR TESTING");
+		        break;
+	        }
+    	}
+    	
+    	WMDebug.debug("==== Flushing cached reference items ====");
+    	// Store all items in storedRefItems
+    	Iterator<Entry<String, Item>> keySetIter = 
+    			storedRefItems.entrySet().iterator();
+    	while(keySetIter.hasNext()){
+    		Entry<String, Item> keySet = keySetIter.next();
+    		WMDebug.debug("Storing item:["+keySet.getKey()+"]");
+    		store(keySet.getValue());
+    	}
+    
+    	fw.close();
+    	
+    }
+    
+    /**
+     * Gets ID of referenced object.
+     * @param fieldName The reference or collection this object is referred to in 
+     * @param pID Primary ID value of referenced object
+     * @return InterMine item identifier for this object
+     * @throws Exception 
+     */
+	public Item getRefItem(String className, String pID) throws Exception {
+//    	ReferenceDescriptor rd = classCD.getReferenceDescriptorByName(fieldName, true);
+    	if( className == null ){
+    		throw new Exception("getRefID className parameter is null");
+    	}
+    	if( pID == null ){
+    		throw new Exception("getRefID pID parameter is null");
+    	}
+    	
+		Item referencedItem; 
+		if (storedRefItems.containsKey(className + ":" + pID)) {
+			referencedItem = storedRefItems.get(className + ":"
+					+ pID);
+		} else {
+			WMDebug.debug("new " + className + " object:" + pID);
+			referencedItem = createItem(className);
+
+			referencedItem.setAttribute(getClassPIDField(className), pID);
 			
-			
-			WMDebug.debug("Storing item "+ID);
-			store(item);
-			
-			WMDebug.debug("STOPPED AFTER 1 GENE FOR TESTING PURPOSES");
-			return; // TODO DEBUG
+			storedRefItems.put(className+":"+pID, referencedItem);
+		}
+
+		return referencedItem;
+	}
+	
+	// TODO configure two part keys
+	public String getClassPIDField(String className) throws Exception{
+		if (keyMapping.containsKey(className)) {
+			return keyMapping.get(className);
+		} 
+		
+		throw new Exception(
+				"keyMapping hash has no \"class key value\" for "
+				+ className);
+	}
+
+	/**
+	 * This method is automatically called if "mapping.file" property set 
+	 * for source in project XML.
+	 * 
+	 * Reads InterMine to AceXML data mapping configuration file
+	 * @param mappingFile 
+	 * @throws Exception
+	 */
+    public void setMappingFile(String mappingFile) throws Exception{
+        dataMapping = new DataMapper();
+    	try {
+			dataMapping.load(new FileReader(mappingFile));
+		} catch (FileNotFoundException e) {
+			WMDebug.debug("ERROR: "+mappingFile+" not found");
+			throw e;
+		}
+    	System.out.println("Processed mapping file: "+mappingFile);
+    }
+    
+    /**
+	 * This method is automatically called if "key.file" property set 
+	 * for source in project XML.
+	 * 
+	 * Reads key/value file loader will use.
+	 * File must be in the format
+	 * 
+	 * className.key = value
+	 * 
+	 * For example:
+	 * BioEntity.key = primaryIdentifier
+	 * This line will set the primaryIdentifier field as primary key
+	 * for all children of BioEntity.  Precedence granted to more
+	 * specific keys.
+	 * 
+     * @param keyFilePath
+     * @throws Exception
+     */
+    public void setKeyFile(String keyFilePath) throws Exception{
+        keyMapping = new HashMap<String, String>();
+    	Properties keyFileProps = new Properties();
+    	try{
+	    	keyFileProps.load(new FileReader(keyFilePath));
+    	}catch(Exception e){
+    		System.out.println("Problem loading keyfile:["+keyFilePath+"]");
+    		e.printStackTrace();
+    		throw e;
+    	}
+    	Enumeration keyEnum = keyFileProps.keys();
+    	while( keyEnum.hasMoreElements() ){
+    		String key = (String) keyEnum.nextElement();
+    		int index = key.indexOf(".key");
+			if(index > 0){
+    			keyMapping.put( key.substring(0, index), 
+    							keyFileProps.getProperty(key));
+    			
+    		}
+    	}
+    	System.out.println("Processed key file: ["+keyFilePath+"]");
+    }
+    
+    /**
+     * Sets the reverse reference of referenced classes of 1:1 and N:1 
+     * relationships.
+     * @param currentItem The item whose fields are being processed.
+     * @param referencedItem The item the currentItem's reference points to
+     * @param rd Descriptor for currentItem's current reference being processed 
+     * @param refPID The primary ID intended to be set for referencedItem
+     */
+    public void setRevRefIfExists(Item currentItem, Item referencedItem, 
+    		ReferenceDescriptor rd){
+    	ReferenceDescriptor rrd = rd.getReverseReferenceDescriptor();
+		if(rrd == null){
+			WMDebug.debug("Unidirectional, no reverse reference");
+		}else{
+//			WMDebug.debug(String.format(
+//					"Setting (%s)%s.%s= current item", 
+//					rd.getName(), rd.getReferencedClassName(), 
+//					rrd.getName()));
+			referencedItem.setReference(rrd.getName(), currentItem);
 		}
     }
     
-    public void setTestVal(String testVal){
-    	System.out.println("JDJDJD:: WormbaseGff3CoreGff.setTestVal called");
-    	if(testVal.length() > 1){ 
-    		System.out.println("JDJDJD:: WormbaseGff3CoreGff.setTestVal = "+testVal);
-    	}
-    }
+    public void addToRevColIfExists(Item currentItem, Item referencedItem, 
+    		ReferenceDescriptor rd){
+    	CollectionDescriptor rcd = (CollectionDescriptor) rd.getReverseReferenceDescriptor();
+		if(rcd == null){
+			WMDebug.debug("Unidirectional, no reverse reference");
+		}else{
+			WMDebug.debug(String.format(
+					"Adding current item to (%s)%s.%s", 
+					rd.getName(), rd.getReferencedClassName(), 
+					rcd.getName()));
+			referencedItem.addToCollection(rcd.getName(), currentItem);
+		}
 
+    }
+    
 }
