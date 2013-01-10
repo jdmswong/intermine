@@ -62,7 +62,7 @@
          <property name="gff3.seqClsName"        value="Chromosome"/>
          <property name="gff3.dataSetTitle"      value="WormBase B. xylophilus genomic annotations"/>
          <property name="src.data.dir"           location="&datadir;/genomic_annotations/b_xylophilus"/>
-         <property name="src.data.dir.includes"  value="b_xylophilus.current.annotations.gff3"/>
+         <property name="src.data.dir.includes"  valcanue="b_xylophilus.current.annotations.gff3"/>
       </source>
       <source name="cangaria-gff3" type="wormbase-gff3-core" dump="true">
          <property name="gff3.taxonId"           value="&c_angaria_taxon_id;"/>
@@ -100,10 +100,9 @@
          <property name="gff3.seqClsName"        value="Chromosome"/>
          <property name="gff3.dataSetTitle"      value="WormBase C. elegans genomic annotations"/>
          <property name="src.data.dir"           location="&datadir;/test_gff3"/>
+		 <!--         <property name="src.data.dir"           location="&datadir;/test_gff3"/> -->
          
-         <property name="gff3.testVal" 			 value="TEST VALUE1"/>
-         <property name="testVal"				 value="TEST VALUE2"/>
-         <property name="test.val"				 value="TEST VALUE3"/>
+         <property name="gff3.allowedClasses" 	 value="Gene,Allele,STFU"/>
 
       </source>
  

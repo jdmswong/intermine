@@ -13,6 +13,7 @@ package org.intermine.bio.task;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.File;
+import java.util.ArrayList;
 
 import org.intermine.objectstore.ObjectStoreWriterFactory;
 import org.intermine.objectstore.ObjectStoreWriter;
@@ -49,6 +50,7 @@ public class GFF3ConverterTask extends Task
 
     private String dataSourceName;
     private String dataSetTitle;
+    private String[] allowedClasses;
 
     private String seqHandlerClassName;
 
@@ -110,8 +112,6 @@ public class GFF3ConverterTask extends Task
      * @param seqDataSourceName the seqDataSourceName
      */
     public void setSeqDataSourceName(String seqDataSourceName) {
-    	System.out.println("JDJDJD:: GFF3ConverterTask.seqSeqDataSourceName() = "+
-    			seqDataSourceName); // TODO DEBUG
         this.seqDataSourceName = seqDataSourceName;
     }
 
@@ -228,7 +228,8 @@ public class GFF3ConverterTask extends Task
 
             GFF3Converter gff3converter =
                 new GFF3Converter(writer, seqClsName, orgTaxonId, dataSourceName,
-                                  dataSetTitle, tgtModel, recordHandler, sequenceHandler);
+                                  dataSetTitle, tgtModel, recordHandler, sequenceHandler,
+                                  allowedClasses); 
             if (dontCreateLocations) {
                 gff3converter.setDontCreateLocations(dontCreateLocations);
             }
@@ -266,11 +267,12 @@ public class GFF3ConverterTask extends Task
      * Test to see if this function ends up handling property I planted
      * @param testVal
      */
-    public void setTestVal(String testVal){
-    	System.out.println("JDJDJD:: GFF3ConverterTask.setTestVal()"); // TODO DEBUG
-    	if(testVal.length() > 1){
-    		System.out.println("JDJDJD:: GFF3ConverterTask.setTestVal() = "+testVal);
-    	}
+    public void setAllowedClasses(String input){
+    	System.out.println("JDJDJD:: GFF3ConverterTask.setTestVal() = "+input);
+    	allowedClasses = input.split("\\s*,\\s*");
+    	
     }
+    
+    
 
 }

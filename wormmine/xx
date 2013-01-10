@@ -2,15 +2,15 @@ cd dbmodel;
 ant clean build-db -v;
 cd ..;
 
-cd ../integrate;
+cd integrate;
 ant -v -Dsource=all;
 cd ..;
 
-cd ../postprocess;
+cd postprocess;
 ant;
 cd ..;
 
-cd ../webapp;
+cd webapp;
 ant default remove-webapp release-webapp;
 cd ..;
 

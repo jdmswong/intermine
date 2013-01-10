@@ -55,6 +55,7 @@ public class GFF3Converter extends DataConverter
     protected IdResolverFactory resolverFactory;
     private final Map<String, Item> dataSets = new HashMap<String, Item>();
     private final Map<String, Item> dataSources = new HashMap<String, Item>();
+    private HashSet<String> allowedClasses;
 
     /**
      * Constructor
@@ -67,17 +68,34 @@ public class GFF3Converter extends DataConverter
      * @param tgtModel the model to create items in
      * @param handler object to perform optional additional operations per GFF3 line
      * @param sequenceHandler the GFF3SeqHandler use to create sequence Items
+     * @param allowedClasses2 
      * @throws ObjectStoreException if something goes wrong
      */
     public GFF3Converter(ItemWriter writer, String seqClsName, String orgTaxonId,
             String dataSourceName, String dataSetTitle, Model tgtModel,
             GFF3RecordHandler handler, GFF3SeqHandler sequenceHandler) throws ObjectStoreException {
+    	// Calls same constructor without allowedClasses parameter
+    	this(writer, seqClsName,  orgTaxonId, dataSourceName,  dataSetTitle,  tgtModel,
+                 handler,  sequenceHandler, null);
+    }
+    
+    /**
+     * @param allowedClasses This object will only process these classes
+     */
+    public GFF3Converter(ItemWriter writer, String seqClsName, String orgTaxonId,
+            String dataSourceName, String dataSetTitle, Model tgtModel,
+            GFF3RecordHandler handler, GFF3SeqHandler sequenceHandler, String[] allowedClasses)
+            throws ObjectStoreException {
         super(writer, tgtModel);
         this.seqClsName = seqClsName;
         this.orgTaxonId = orgTaxonId;
         this.tgtModel = tgtModel;
         this.handler = handler;
         this.sequenceHandler = sequenceHandler;
+        this.allowedClasses = new HashSet<String>();
+        for( int i=0; i<allowedClasses.length; i++){
+        	this.allowedClasses.add(allowedClasses[i].toUpperCase());
+        }
 
         organism = getOrganism();
         dataSource = getDataSourceItem(dataSourceName);
@@ -152,6 +170,7 @@ public class GFF3Converter extends DataConverter
     }
 
     /**
+     * MODIFIED
      * process GFF3 record and give a xml presentation
      * @param record GFF3Record
      * @throws ObjectStoreException if an error occurs storing items
@@ -173,11 +192,16 @@ public class GFF3Converter extends DataConverter
         String fullClassName = tgtModel.getPackageName() + "." + className;
 
         // ADDED BY JD //
-        // only accept genes
-        
-        if( !(className.equalsIgnoreCase("Gene")) ){
+        if( !(allowedClasses.contains(className.toUpperCase())) ){
         	return;
         }
+        
+//        String seqID = record.getSequenceID();
+//        System.out.println("JDJDJD::"+seqID);
+//        int num=1;
+//        if(num!=0){
+//        	throw new ObjectStoreException("HAHAHAHA");
+//        }
         // =========== //
         
         ClassDescriptor cd = tgtModel.getClassDescriptorByName(fullClassName);
@@ -205,7 +229,8 @@ public class GFF3Converter extends DataConverter
             if (makeLocation) {
                 Item location = getLocation(record, refId, seq, cd);
                 if (feature == null) {
-                	System.out.println("JDJDJD:: GFF3Converter.process() just wanted the location, returning..."); // TODO DEBUG                    // this feature has already been created and stored
+                	// this feature has already been created and stored
+                	System.out.println("JDJDJD:: GFF3Converter.process() just wanted the location, returning...");  
                     // we only wanted the location, we're done here.
                     store(location);
                     return;
@@ -222,7 +247,7 @@ public class GFF3Converter extends DataConverter
         }
 
         if (feature == null) {
-            System.out.println("JDJDJD:: GFF3Converter.process() feature already stored, returning..."); // TODO DEBUG
+            System.out.println("JDJDJD:: GFF3Converter.process() feature already stored, returning..."); 
             // this feature has already been created and stored
             // feature with discontinous location, this location wasn't valid for some reason
             return;
