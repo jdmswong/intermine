@@ -92,9 +92,11 @@ public class GFF3Converter extends DataConverter
         this.tgtModel = tgtModel;
         this.handler = handler;
         this.sequenceHandler = sequenceHandler;
-        this.allowedClasses = new HashSet<String>();
-        for( int i=0; i<allowedClasses.length; i++){
-        	this.allowedClasses.add(allowedClasses[i].toUpperCase());
+        if( allowedClasses != null ){
+	        this.allowedClasses = new HashSet<String>();
+	        for( int i=0; i<allowedClasses.length; i++){
+	        	this.allowedClasses.add(allowedClasses[i].toUpperCase());
+	        }
         }
 
         organism = getOrganism();
@@ -192,8 +194,12 @@ public class GFF3Converter extends DataConverter
         String fullClassName = tgtModel.getPackageName() + "." + className;
 
         // ADDED BY JD //
-        if( !(allowedClasses.contains(className.toUpperCase())) ){
-        	return;
+        if( allowedClasses != null ){
+	        if( !(allowedClasses.contains(className.toUpperCase())) ){
+	        	return;
+	        }
+        }else{
+//        	System.out.println("JDJDJD:: GFF3Converter.process() allowedClasses=null");
         }
         
 //        String seqID = record.getSequenceID();

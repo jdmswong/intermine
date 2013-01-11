@@ -102,7 +102,7 @@
          <property name="src.data.dir"           location="&datadir;/test_gff3"/>
 		 <!--         <property name="src.data.dir"           location="&datadir;/test_gff3"/> -->
          
-         <property name="gff3.allowedClasses" 	 value="Gene,Allele,STFU"/>
+         <property name="gff3.allowedClasses" 	 value="Gene,Allele"/>
 
       </source>
  

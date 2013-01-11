@@ -188,6 +188,8 @@ public class GFF3ConverterTask extends Task
         if (model == null) {
             throw new BuildException("model attribute not set");
         }
+//        System.out.println("JDJDJD:: allowedClasses="+allowedClasses[0]);
+        
 
         ObjectStoreWriter osw = null;
         ItemWriter writer = null;
@@ -268,8 +270,14 @@ public class GFF3ConverterTask extends Task
      * @param testVal
      */
     public void setAllowedClasses(String input){
-    	System.out.println("JDJDJD:: GFF3ConverterTask.setTestVal() = "+input);
-    	allowedClasses = input.split("\\s*,\\s*");
+    	System.out.println("JDJDJD:: GFF3ConverterTask.setAllowedClasses() = "+input);
+    	if(input.equals("${gff3.allowedClasses}")){
+    		// If property not set, ant returns raw variable call
+    		allowedClasses = null;
+    	}else{
+    		allowedClasses = input.split("\\s*,\\s*");
+    	}
+    	
     	
     }
     

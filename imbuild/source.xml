@@ -252,7 +252,9 @@
                   handlerClassName="${gff3.handlerClassName}"
                   seqHandlerClassName="${gff3.seqHandlerClassName}"
 				  allowedClasses="${gff3.allowedClasses}">
-      <fileset dir="${src.data.dir}">
+				<!-- GFF3ConverterTask tests whether allowedClasses='${gff3.allowedClasses}' exactly
+				for property assertion status. -->
+	  <fileset dir="${src.data.dir}">
         <include name="*.gff"/>
         <include name="*.gff3"/>
       </fileset>
