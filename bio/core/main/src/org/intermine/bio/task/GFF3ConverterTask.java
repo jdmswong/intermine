@@ -11,9 +11,11 @@ package org.intermine.bio.task;
  */
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.intermine.objectstore.ObjectStoreWriterFactory;
 import org.intermine.objectstore.ObjectStoreWriter;
@@ -51,7 +53,8 @@ public class GFF3ConverterTask extends Task
     private String dataSourceName;
     private String dataSetTitle;
     private String[] allowedClasses;
-
+    private HashMap<String, String> IDMap;
+    
     private String seqHandlerClassName;
 
     private boolean dontCreateLocations = false;
@@ -188,7 +191,6 @@ public class GFF3ConverterTask extends Task
         if (model == null) {
             throw new BuildException("model attribute not set");
         }
-//        System.out.println("JDJDJD:: allowedClasses="+allowedClasses[0]);
         
 
         ObjectStoreWriter osw = null;
@@ -231,7 +233,7 @@ public class GFF3ConverterTask extends Task
             GFF3Converter gff3converter =
                 new GFF3Converter(writer, seqClsName, orgTaxonId, dataSourceName,
                                   dataSetTitle, tgtModel, recordHandler, sequenceHandler,
-                                  allowedClasses); 
+                                  allowedClasses, IDMap); 
             if (dontCreateLocations) {
                 gff3converter.setDontCreateLocations(dontCreateLocations);
             }
@@ -277,8 +279,37 @@ public class GFF3ConverterTask extends Task
     	}else{
     		allowedClasses = input.split("\\s*,\\s*");
     	}
-    	
-    	
+    }
+    
+    /**
+     * Parses ID mapping file into HashMap<String, String>.  This map is used to convert GFF3 IDs to 
+     * facilitate merging.
+     * @param mappingFile
+     */
+    public void setMappingFile(String mappingFile){
+    	System.out.println("JDJDJD:: GFF3ConverterTask.setMappingFile() = "+mappingFile);
+    	if(mappingFile.equals("${gff3.mappingFile}")){
+    		IDMap = null;
+    	}else{
+    		BufferedReader in;
+    		IDMap = new HashMap<String, String>();
+			try {
+				in = new BufferedReader( new FileReader(mappingFile) );
+	    		while(in.ready()){
+	    			String lineRead = in.readLine();
+	    			String[] line = lineRead.split("\\t");
+//	    			System.out.print(lineRead);
+	    			if(line[0].length() > 1){
+	    				IDMap.put(line[0], line[1]);
+	    			}else{
+//	    				System.out.println(lineRead+"*");
+	    				continue;
+	    			}
+	    		}
+			} catch (Exception e) {
+				throw new BuildException(e);
+			}
+    	}
     }
     
     

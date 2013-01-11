@@ -102,7 +102,10 @@
          <property name="src.data.dir"           location="&datadir;/test_gff3"/>
 		 <!--         <property name="src.data.dir"           location="&datadir;/test_gff3"/> -->
          
+			 <!-- Custom properties: -->
          <property name="gff3.allowedClasses" 	 value="Gene,Allele"/>
+		 <!-- Format: key \t value. All other columns ignored -->
+		 <property name="gff3.mappingFile"	 value="&datadir;/test_gff3/c_elegans.WS235.geneIDs.wb-gff3.tab"/>
 
       </source>
  

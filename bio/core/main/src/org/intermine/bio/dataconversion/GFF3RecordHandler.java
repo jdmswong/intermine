@@ -45,6 +45,7 @@ public class GFF3RecordHandler
     private ReferenceList publicationReferenceList = new ReferenceList("publications");
     private Item tgtOrganism;
     protected Item tgtSequence;
+    protected HashMap<String, String> IDMap = null;
 
     /**
      * Construct with the model to create items in (for type checking).
@@ -345,5 +346,17 @@ public class GFF3RecordHandler
      */
     public void setConverter(GFF3Converter converter) {
         this.converter = converter;
+    }
+    
+    /**
+     * @param IDMap Map between current IDs to desired IDs, used
+     * 	by subclass to allow merging with other sources
+     */
+    public void setIDMap(HashMap<String,String> IDMap){
+    	this.IDMap = IDMap;
+    }
+    
+    public void clearIDMap(){
+    	IDMap = null;
     }
 }

@@ -251,7 +251,8 @@
                   model="${target.model}"
                   handlerClassName="${gff3.handlerClassName}"
                   seqHandlerClassName="${gff3.seqHandlerClassName}"
-				  allowedClasses="${gff3.allowedClasses}">
+				  allowedClasses="${gff3.allowedClasses}"
+				  mappingFile="${gff3.mappingFile}">
 				<!-- GFF3ConverterTask tests whether allowedClasses='${gff3.allowedClasses}' exactly
 				for property assertion status. -->
 	  <fileset dir="${src.data.dir}">

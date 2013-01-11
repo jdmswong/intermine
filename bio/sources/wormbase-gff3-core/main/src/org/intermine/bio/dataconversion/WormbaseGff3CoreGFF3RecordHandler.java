@@ -56,7 +56,18 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
         // some identifier. 
 
     	Item feature = getFeature();
-    	WMDebug.debug(record.toString());
+    	String ID = record.getId();
+    	String sequenceName = ID.split("Gene:")[1]; // Kludgy way of removing prefix
+    	
+    	if(this.IDMap.containsKey(sequenceName)){
+	    	String matchedID = this.IDMap.get(sequenceName);
+	    	feature.setAttribute("primaryIdentifier", matchedID);
+    	}else{
+	    	feature.setAttribute("primaryIdentifier", sequenceName);
+    		
+    	}
+    	
+    	//WMDebug.debug(record.toString());
     	
     	
 //    	WMDebug.debug("WormbaseGff3CoreGFF3RecordHandler.process() called"); // TODO DEBUG

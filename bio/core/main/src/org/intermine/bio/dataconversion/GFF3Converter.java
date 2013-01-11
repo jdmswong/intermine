@@ -55,10 +55,10 @@ public class GFF3Converter extends DataConverter
     protected IdResolverFactory resolverFactory;
     private final Map<String, Item> dataSets = new HashMap<String, Item>();
     private final Map<String, Item> dataSources = new HashMap<String, Item>();
-    private HashSet<String> allowedClasses;
+    private HashSet<String> allowedClasses = null;
 
     /**
-     * Constructor
+     * Nine-parameter constructor
      * @param writer ItemWriter
      * @param seqClsName The class of the coordinate system for this GFF3 file (generally
      * Chromosome)
@@ -74,17 +74,33 @@ public class GFF3Converter extends DataConverter
     public GFF3Converter(ItemWriter writer, String seqClsName, String orgTaxonId,
             String dataSourceName, String dataSetTitle, Model tgtModel,
             GFF3RecordHandler handler, GFF3SeqHandler sequenceHandler) throws ObjectStoreException {
-    	// Calls same constructor without allowedClasses parameter
+    	// Passes nulls in for allowedClasses and IDMap
     	this(writer, seqClsName,  orgTaxonId, dataSourceName,  dataSetTitle,  tgtModel,
-                 handler,  sequenceHandler, null);
+                 handler,  sequenceHandler, null, null);
     }
     
     /**
+     * Ten-parameter constructor
      * @param allowedClasses This object will only process these classes
      */
     public GFF3Converter(ItemWriter writer, String seqClsName, String orgTaxonId,
             String dataSourceName, String dataSetTitle, Model tgtModel,
-            GFF3RecordHandler handler, GFF3SeqHandler sequenceHandler, String[] allowedClasses)
+            GFF3RecordHandler handler, GFF3SeqHandler sequenceHandler, String[] allowedClasses
+            ) throws ObjectStoreException {
+    	// Passes nulls in for IDMap
+    	this(writer, seqClsName,  orgTaxonId, dataSourceName,  dataSetTitle,  tgtModel,
+                 handler,  sequenceHandler, allowedClasses, null);
+    }
+
+
+    /**
+     * Eleven-parameter constructor
+     * @param IDMap Parser uses this if present to convert given GFF ID to desired type
+     */
+    public GFF3Converter(ItemWriter writer, String seqClsName, String orgTaxonId,
+            String dataSourceName, String dataSetTitle, Model tgtModel,
+            GFF3RecordHandler handler, GFF3SeqHandler sequenceHandler, String[] allowedClasses,
+            HashMap<String, String> IDMap)
             throws ObjectStoreException {
         super(writer, tgtModel);
         this.seqClsName = seqClsName;
@@ -97,6 +113,9 @@ public class GFF3Converter extends DataConverter
 	        for( int i=0; i<allowedClasses.length; i++){
 	        	this.allowedClasses.add(allowedClasses[i].toUpperCase());
 	        }
+        }
+        if( IDMap != null ){
+        	this.handler.setIDMap(IDMap);
         }
 
         organism = getOrganism();
