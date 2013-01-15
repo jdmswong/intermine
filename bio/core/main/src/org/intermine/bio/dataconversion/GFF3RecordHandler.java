@@ -46,6 +46,7 @@ public class GFF3RecordHandler
     private Item tgtOrganism;
     protected Item tgtSequence;
     protected HashMap<String, String> IDMap = null;
+    protected HashMap<String, String> typeMap = null;
 
     /**
      * Construct with the model to create items in (for type checking).
@@ -358,5 +359,9 @@ public class GFF3RecordHandler
     
     public void clearIDMap(){
     	IDMap = null;
+    }
+    
+    public void setTypeMap(HashMap<String,String> typeMap){
+    	this.typeMap = typeMap;
     }
 }

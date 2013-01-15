@@ -76,7 +76,7 @@ public class GFF3Converter extends DataConverter
             GFF3RecordHandler handler, GFF3SeqHandler sequenceHandler) throws ObjectStoreException {
     	// Passes nulls in for allowedClasses and IDMap
     	this(writer, seqClsName,  orgTaxonId, dataSourceName,  dataSetTitle,  tgtModel,
-                 handler,  sequenceHandler, null, null);
+                 handler,  sequenceHandler, null, null, null);
     }
     
     /**
@@ -89,9 +89,8 @@ public class GFF3Converter extends DataConverter
             ) throws ObjectStoreException {
     	// Passes nulls in for IDMap
     	this(writer, seqClsName,  orgTaxonId, dataSourceName,  dataSetTitle,  tgtModel,
-                 handler,  sequenceHandler, allowedClasses, null);
+                 handler,  sequenceHandler, allowedClasses, null, null);
     }
-
 
     /**
      * Eleven-parameter constructor
@@ -101,6 +100,20 @@ public class GFF3Converter extends DataConverter
             String dataSourceName, String dataSetTitle, Model tgtModel,
             GFF3RecordHandler handler, GFF3SeqHandler sequenceHandler, String[] allowedClasses,
             HashMap<String, String> IDMap)
+            throws ObjectStoreException {
+    	// Passes nulls in for IDMap
+    	this(writer, seqClsName,  orgTaxonId, dataSourceName,  dataSetTitle,  tgtModel,
+                 handler,  sequenceHandler, allowedClasses, IDMap, null);
+    }
+
+    /**
+     * Twelve-parameter constructor
+     * @param typeMap converts given GFF3 type to InterMine class name.  Ex: mRNA -> Transcript
+     */
+    public GFF3Converter(ItemWriter writer, String seqClsName, String orgTaxonId,
+            String dataSourceName, String dataSetTitle, Model tgtModel,
+            GFF3RecordHandler handler, GFF3SeqHandler sequenceHandler, String[] allowedClasses,
+            HashMap<String, String> IDMap, HashMap<String, String> typeMap)
             throws ObjectStoreException {
         super(writer, tgtModel);
         this.seqClsName = seqClsName;
@@ -116,6 +129,9 @@ public class GFF3Converter extends DataConverter
         }
         if( IDMap != null ){
         	this.handler.setIDMap(IDMap);
+        }
+        if( typeMap != null ){
+        	this.handler.setTypeMap(typeMap);
         }
 
         organism = getOrganism();
@@ -255,7 +271,7 @@ public class GFF3Converter extends DataConverter
                 Item location = getLocation(record, refId, seq, cd);
                 if (feature == null) {
                 	// this feature has already been created and stored
-                	System.out.println("JDJDJD:: GFF3Converter.process() just wanted the location, returning...");  
+                	//System.out.println("JDJDJD:: GFF3Converter.process() just wanted the location, returning...");  
                     // we only wanted the location, we're done here.
                     store(location);
                     return;

@@ -53,7 +53,8 @@ public class GFF3ConverterTask extends Task
     private String dataSourceName;
     private String dataSetTitle;
     private String[] allowedClasses;
-    private HashMap<String, String> IDMap;
+    private HashMap<String, String> IDMap = null;
+    private HashMap<String, String> typeMap = null;
     
     private String seqHandlerClassName;
 
@@ -233,7 +234,7 @@ public class GFF3ConverterTask extends Task
             GFF3Converter gff3converter =
                 new GFF3Converter(writer, seqClsName, orgTaxonId, dataSourceName,
                                   dataSetTitle, tgtModel, recordHandler, sequenceHandler,
-                                  allowedClasses, IDMap); 
+                                  allowedClasses, IDMap, typeMap); 
             if (dontCreateLocations) {
                 gff3converter.setDontCreateLocations(dontCreateLocations);
             }
@@ -286,9 +287,9 @@ public class GFF3ConverterTask extends Task
      * facilitate merging.
      * @param mappingFile
      */
-    public void setMappingFile(String mappingFile){
-    	System.out.println("JDJDJD:: GFF3ConverterTask.setMappingFile() = "+mappingFile);
-    	if(mappingFile.equals("${gff3.mappingFile}")){
+    public void setIDMappingFile(String mappingFile){
+    	System.out.println("JDJDJD:: GFF3ConverterTask.setIDMappingFile() = "+mappingFile);
+    	if(mappingFile.equals("${gff3.IDMappingFile}")){
     		IDMap = null;
     	}else{
     		BufferedReader in;
@@ -312,6 +313,32 @@ public class GFF3ConverterTask extends Task
     	}
     }
     
+    public void setTypeMappingFile(String mappingFile){
+    	System.out.println("JDJDJD:: GFF3ConverterTask.setTypeMappingFile() = "+mappingFile);
+    	if(mappingFile.equals("${gff3.typeMappingFile}")){
+    		typeMap = null;
+    	}else{
+    		BufferedReader in;
+    		typeMap = new HashMap<String, String>();
+			try {
+				in = new BufferedReader( new FileReader(mappingFile) );
+	    		while(in.ready()){
+	    			String lineRead = in.readLine();
+	    			String[] line = lineRead.split("\\t");
+//	    			System.out.print(lineRead);
+	    			if(line[0].length() > 1){
+	    				typeMap.put(line[0], line[1]);
+	    			}else{
+//	    				System.out.println(lineRead+"*");
+	    				continue;
+	    			}
+	    		}
+			} catch (Exception e) {
+				throw new BuildException(e);
+			}
+    	}
+    }
+    	
     
 
 }

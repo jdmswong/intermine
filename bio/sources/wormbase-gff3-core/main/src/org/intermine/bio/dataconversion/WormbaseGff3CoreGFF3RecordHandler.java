@@ -57,21 +57,36 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
 
     	Item feature = getFeature();
     	String ID = record.getId();
-    	String sequenceName = ID.split("Gene:")[1]; // Kludgy way of removing prefix
     	
-    	if(this.IDMap.containsKey(sequenceName)){
-	    	String matchedID = this.IDMap.get(sequenceName);
-	    	feature.setAttribute("primaryIdentifier", matchedID);
-    	}else{
-	    	feature.setAttribute("primaryIdentifier", sequenceName);
-    		
+    	String sequenceName = "";
+    	try{
+    	sequenceName = ID.split(":")[1]; // Kludgy way of removing prefix
+    	}catch( Exception e ){
+    		WMDebug.debug("RECORD INVALID FORMAT:"+record.toString());
+    		return;
     	}
     	
-    	//WMDebug.debug(record.toString());
+    	// Convert ID if available
+    	if( IDMap != null && IDMap.containsKey(sequenceName)){
+		    	String matchedID = IDMap.get(sequenceName);
+		    	feature.setAttribute("primaryIdentifier", matchedID);
+	    	}else{
+		    	feature.setAttribute("primaryIdentifier", sequenceName);
+	    	}
     	
+    	// Convert record type is available
+    	String recordType = record.getType();
+    	if( typeMap != null && typeMap.containsKey(recordType) ){
+    		feature.setClassName(typeMap.get(recordType));
+    		WMDebug.debug("Setting "+recordType+" to "+typeMap.get(recordType));
+    	}
     	
 //    	WMDebug.debug("WormbaseGff3CoreGFF3RecordHandler.process() called"); // TODO DEBUG
 //    	System.out.println("JDJDJD:: WormbaseGff3CoreGFF3RecordHandler.process() :\t"+record.toString());
+    }
+    
+    public void processTranscript(){
+    	
     }
 
 
