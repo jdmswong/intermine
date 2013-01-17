@@ -364,4 +364,19 @@ public class GFF3RecordHandler
     public void setTypeMap(HashMap<String,String> typeMap){
     	this.typeMap = typeMap;
     }
+    
+    /**
+     * Returns mapped ID if IDMap is set to a hash and key exists. 
+     * Otherwise returns given value;
+     * @param ID key of IDMap hash
+     * @return value of mapped ID, or same input
+     */
+    public String mapThisID(String ID){
+    	if( IDMap != null && IDMap.containsKey(ID)){
+	    	return IDMap.get(ID);
+    	}else{
+	    	return ID;
+    	}
+
+    }
 }

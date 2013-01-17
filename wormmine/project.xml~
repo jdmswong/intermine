@@ -106,14 +106,14 @@
 		 Only GFF3 records with a third column matching this value 
 		 are processed.  Case insensitive.
 		 -->
-         <property name="gff3.allowedClasses" 	 value="mrna"/>
+         <property name="gff3.allowedClasses" 	 value="gene,mrna"/>
 		 
 		 <!-- 
 		 This file maps IDs from GFF3 into a type compatible with other 
 		 data sources
 		 Format: key \t value. All other columns ignored 
 		 -->
-			 <!--<property name="gff3.IDMappingFile"	 value="&datadir;/test_gff3/c_elegans.WS235.geneIDs.wb-gff3.tab"/> -->
+		 <property name="gff3.IDMappingFile"	 value="&datadir;/test_gff3/c_elegans.WS235.geneIDs.wb-gff3.tab"/> 
 		 
 		 <!-- 
 		 Maps type names from GFF3 into recognized InterMine class names

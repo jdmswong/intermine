@@ -48,7 +48,7 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
         // Any new Items created can be stored by calling addItem().  For example:
         // 
         //     String geneIdentifier = record.getAttributes().get("gene");
-        //     gene = createItem("Gene");
+        //     gene = converter.createItem("Gene");
         //     gene.setAttribute("primaryIdentifier", geneIdentifier);
         //     addItem(gene);
         //
@@ -60,33 +60,65 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
     	
     	String sequenceName = "";
     	try{
-    	sequenceName = ID.split(":")[1]; // Kludgy way of removing prefix
+    	sequenceName = stripTypePrefix(ID); // Remove prefix, eg:("Gene:")
     	}catch( Exception e ){
     		WMDebug.debug("RECORD INVALID FORMAT:"+record.toString());
     		return;
     	}
     	
-    	// Convert ID if available
-    	if( IDMap != null && IDMap.containsKey(sequenceName)){
-		    	String matchedID = IDMap.get(sequenceName);
-		    	feature.setAttribute("primaryIdentifier", matchedID);
-	    	}else{
-		    	feature.setAttribute("primaryIdentifier", sequenceName);
-	    	}
-    	
-    	// Convert record type is available
+    	if(feature.getClassName().equals("Gene")){
+	    	// Convert ID if available
+			feature.setAttribute("primaryIdentifier", mapThisID(sequenceName).trim());
+    	}else{
+    		feature.setAttribute("primaryIdentifier", sequenceName.trim());
+    	}
+		
+    	// Convert record type if available
     	String recordType = record.getType();
     	if( typeMap != null && typeMap.containsKey(recordType) ){
     		feature.setClassName(typeMap.get(recordType));
-    		WMDebug.debug("Setting "+recordType+" to "+typeMap.get(recordType));
     	}
+    	
+    	if( 		feature.getClassName().equals("Transcript")	){
+    		processTranscript(record, feature);
+    	}else if(	feature.getClassName().equals("CDS")		){
+    		processCDS(record, feature);
+    	}
+    	
     	
 //    	WMDebug.debug("WormbaseGff3CoreGFF3RecordHandler.process() called"); // TODO DEBUG
 //    	System.out.println("JDJDJD:: WormbaseGff3CoreGFF3RecordHandler.process() :\t"+record.toString());
     }
     
-    public void processTranscript(){
+    public String stripTypePrefix(String rawName){
+    	return rawName.substring(rawName.indexOf(':')+1);
+    }
+    
+    public void processGene(GFF3Record record, Item feature){
+    	// empty right now
+    }
+    
+    public void processTranscript(GFF3Record record, Item feature){
+    	// Set gene parent
+    	String parentGeneSeqName = stripTypePrefix( record.getAttributes().get("Parent").get(0) );
+    	Item gene = converter.createItem("Gene");
+    	gene.setAttribute("primaryIdentifier", mapThisID(parentGeneSeqName).trim());
+    	addItem(gene);
     	
+    	feature.setReference("gene", gene);
+    }
+    
+    public void processCDS(GFF3Record record, Item feature){
+    	
+    	if( record.getAttributes().get("Parent") != null ){
+	    	// Set transcript parent
+	    	String parentTranscriptName = stripTypePrefix( record.getAttributes().get("Parent").get(0) );
+	    	Item transcript = converter.createItem("Transcript");
+	    	transcript.setAttribute("primaryIdentifier", parentTranscriptName.trim());
+	    	addItem(transcript);
+	    	
+	    	feature.setReference("transcript", transcript);
+    	}
     }
 
 
