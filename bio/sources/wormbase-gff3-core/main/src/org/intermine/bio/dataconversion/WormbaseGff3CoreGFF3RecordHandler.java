@@ -60,19 +60,52 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
     	
     	String sequenceName = "";
     	try{
-    	sequenceName = stripTypePrefix(ID); // Remove prefix, eg:("Gene:")
+    		sequenceName = stripTypePrefix(ID); // Remove prefix, eg:("Gene:")
     	}catch( Exception e ){
     		WMDebug.debug("RECORD INVALID FORMAT:"+record.toString());
     		return;
     	}
     	
+    	String PID;
     	if(feature.getClassName().equals("Gene")){
 	    	// Convert ID if available
-			feature.setAttribute("primaryIdentifier", mapThisID(sequenceName).trim());
+			PID = mapThisID(sequenceName);
     	}else{
-    		feature.setAttribute("primaryIdentifier", sequenceName.trim());
+    		PID = sequenceName;
     	}
-		
+    	feature.setAttribute("primaryIdentifier", PID);
+    	
+    	// Source only adds first instance of each record
+    	// TODO handle duplicates
+    	// define blacklist, fix this gracefully later
+    	String[] blacklist = {
+			"WBGene00219453",
+			"WBGene00189951",
+			"WBGene00219497",
+			"WBGene00194659",
+			"WBGene00219306",
+			"WBGene00194923"
+    	};
+    	
+    	boolean killThis = false;
+    	for( String blacklistItem : blacklist){
+    		
+	    	if(key2refID.values().contains(blacklistItem)){
+	    		killThis = true;
+	    		return;
+	    	}
+    		
+    	}
+    	if(killThis) return;
+    	// end debugging code
+    	
+    	if(key2refID.containsKey(PID)){
+    		return;
+    	}else{
+    		// So keyAdded(PID) will return true
+    		key2refID.put(PID, feature.getIdentifier());
+    	}
+    	
     	// Convert record type if available
     	String recordType = record.getType();
     	if( typeMap != null && typeMap.containsKey(recordType) ){
@@ -84,6 +117,7 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
     	}else if(	feature.getClassName().equals("CDS")		){
     		processCDS(record, feature);
     	}
+    	
     	
     	
 //    	WMDebug.debug("WormbaseGff3CoreGFF3RecordHandler.process() called"); // TODO DEBUG
@@ -101,11 +135,24 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
     public void processTranscript(GFF3Record record, Item feature){
     	// Set gene parent
     	String parentGeneSeqName = stripTypePrefix( record.getAttributes().get("Parent").get(0) );
-    	Item gene = converter.createItem("Gene");
-    	gene.setAttribute("primaryIdentifier", mapThisID(parentGeneSeqName).trim());
-    	addItem(gene);
+    	String genePID = mapThisID(parentGeneSeqName);
+    	Item gene;
+    	String geneID;
+    	if(!keyAdded(genePID)){
+	    	gene = converter.createItem("Gene");
+	    	gene.setAttribute("primaryIdentifier", genePID);
+	    	addItem(gene, genePID);
+	    	geneID = gene.getIdentifier();
+	    	
+	    	//TODO remove
+	    	if(genePID.equals("WBGene00219306")){
+	    		WMDebug.debug("asdfasdf::"+record.toString());
+	    	}
+    	}else{
+    		geneID = key2refID.get(genePID);
+    	}
     	
-    	feature.setReference("gene", gene);
+    	feature.setReference("gene", geneID);
     }
     
     public void processCDS(GFF3Record record, Item feature){
@@ -113,13 +160,21 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
     	if( record.getAttributes().get("Parent") != null ){
 	    	// Set transcript parent
 	    	String parentTranscriptName = stripTypePrefix( record.getAttributes().get("Parent").get(0) );
-	    	Item transcript = converter.createItem("Transcript");
-	    	transcript.setAttribute("primaryIdentifier", parentTranscriptName.trim());
-	    	addItem(transcript);
+	    	Item transcript;
+	    	String transcriptID;
+	    	if(!keyAdded(parentTranscriptName)){
+		    	transcript = converter.createItem("Transcript");
+		    	transcript.setAttribute("primaryIdentifier", parentTranscriptName);
+		    	addItem(transcript, parentTranscriptName);
+		    	transcriptID = transcript.getIdentifier();
+	    	}else{
+	    		transcriptID = key2refID.get(parentTranscriptName);
+	    	}
 	    	
-	    	feature.setReference("transcript", transcript);
+	    	feature.setReference("transcript", transcriptID);
     	}
     }
 
 
 }
+

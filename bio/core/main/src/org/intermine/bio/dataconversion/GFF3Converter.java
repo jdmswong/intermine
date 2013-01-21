@@ -33,6 +33,8 @@ import org.intermine.util.TypeUtil;
 import org.intermine.xml.full.Item;
 import org.intermine.xml.full.Reference;
 
+import wormbase.model.parser.WMDebug;
+
 /**
  * Class to read a GFF3 source data and produce a data representation
  *
@@ -168,8 +170,12 @@ public class GFF3Converter extends DataConverter
         for (Iterator<?> i = GFF3Parser.parse(bReader); i.hasNext();) {
             record = (GFF3Record) i.next();
 
+            record.setId( handler.mapThisID(record.getId()) );
+            
+            
             // we only care about dupes if we are NOT creating locations
-            if (processedIds.contains(record.getId()) && dontCreateLocations) {
+            if (processedIds.contains(record.getId() ) 
+            		&& dontCreateLocations) {
                 duplicates = true;
                 duplicatedIds.add(record.getId());
             } else {
@@ -233,17 +239,7 @@ public class GFF3Converter extends DataConverter
 	        if( !(allowedClasses.contains(className.toUpperCase())) ){
 	        	return;
 	        }
-        }else{
-//        	System.out.println("JDJDJD:: GFF3Converter.process() allowedClasses=null");
         }
-        
-//        String seqID = record.getSequenceID();
-//        System.out.println("JDJDJD::"+seqID);
-//        int num=1;
-//        if(num!=0){
-//        	throw new ObjectStoreException("HAHAHAHA");
-//        }
-        // =========== //
         
         ClassDescriptor cd = tgtModel.getClassDescriptorByName(fullClassName);
 
@@ -271,7 +267,6 @@ public class GFF3Converter extends DataConverter
                 Item location = getLocation(record, refId, seq, cd);
                 if (feature == null) {
                 	// this feature has already been created and stored
-                	//System.out.println("JDJDJD:: GFF3Converter.process() just wanted the location, returning...");  
                     // we only wanted the location, we're done here.
                     store(location);
                     return;
@@ -288,7 +283,6 @@ public class GFF3Converter extends DataConverter
         }
 
         if (feature == null) {
-            System.out.println("JDJDJD:: GFF3Converter.process() feature already stored, returning..."); 
             // this feature has already been created and stored
             // feature with discontinous location, this location wasn't valid for some reason
             return;
