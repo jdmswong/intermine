@@ -60,44 +60,23 @@ public class WormbaseGff3CoreGFF3RecordHandler extends GFF3RecordHandler
     	
     	String sequenceName = "";
     	try{
-    		sequenceName = stripTypePrefix(ID); // Remove prefix, eg:("Gene:")
+    		//sequenceName = stripTypePrefix(ID); // Remove prefix, eg:("Gene:")
+    		sequenceName = ID;
     	}catch( Exception e ){
     		WMDebug.debug("RECORD INVALID FORMAT:"+record.toString());
     		return;
     	}
     	
-    	String PID;
-    	if(feature.getClassName().equals("Gene")){
-	    	// Convert ID if available
-			PID = mapThisID(sequenceName);
-    	}else{
-    		PID = sequenceName;
-    	}
-    	feature.setAttribute("primaryIdentifier", PID);
+//    	String PID;
+//    	if(feature.getClassName().equals("Gene")){
+//	    	// Convert ID if available
+//			PID = mapThisID(sequenceName);
+//    	}else{
+//    		PID = sequenceName;
+//    	}
+//    	feature.setAttribute("primaryIdentifier", PID);
     	
-    	// Source only adds first instance of each record
-    	// TODO handle duplicates
-    	// define blacklist, fix this gracefully later
-    	String[] blacklist = {
-			"WBGene00219453",
-			"WBGene00189951",
-			"WBGene00219497",
-			"WBGene00194659",
-			"WBGene00219306",
-			"WBGene00194923"
-    	};
-    	
-    	boolean killThis = false;
-    	for( String blacklistItem : blacklist){
-    		
-	    	if(key2refID.values().contains(blacklistItem)){
-	    		killThis = true;
-	    		return;
-	    	}
-    		
-    	}
-    	if(killThis) return;
-    	// end debugging code
+    	String PID = record.getId();
     	
     	if(key2refID.containsKey(PID)){
     		return;

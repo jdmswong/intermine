@@ -389,6 +389,10 @@ public class GFF3RecordHandler
 
     }
     
+    public HashMap<String, String> getIDMap(){
+    	return IDMap;
+    }
+    
     public Item getItem(String refIDKey){
     	return items.get(refIDKey);
     }

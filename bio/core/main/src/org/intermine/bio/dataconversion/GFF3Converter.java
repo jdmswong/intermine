@@ -33,7 +33,6 @@ import org.intermine.util.TypeUtil;
 import org.intermine.xml.full.Item;
 import org.intermine.xml.full.Reference;
 
-import wormbase.model.parser.WMDebug;
 
 /**
  * Class to read a GFF3 source data and produce a data representation
@@ -170,8 +169,12 @@ public class GFF3Converter extends DataConverter
         for (Iterator<?> i = GFF3Parser.parse(bReader); i.hasNext();) {
             record = (GFF3Record) i.next();
 
-            record.setId( handler.mapThisID(record.getId()) );
-            
+            // Hardcoded ID mapping for genes only, TODO fix 
+            if(record.getType().equalsIgnoreCase("Gene")){ 
+            	record.setId( handler.mapThisID(stripTypePrefix(record.getId())) );
+            }else{
+            	record.setId(stripTypePrefix(record.getId()));
+            }
             
             // we only care about dupes if we are NOT creating locations
             if (processedIds.contains(record.getId() ) 
@@ -606,5 +609,17 @@ public class GFF3Converter extends DataConverter
         return refId;
     }
     
+    private String stripTypePrefix(String rawName){
+    	if( rawName == null ) return null;
+    	
+    	if( rawName.contains(":")){
+    		return rawName.substring(rawName.indexOf(':')+1);
+    	}else{
+    		System.out.println("ID without a ':':"+rawName); // debug TODO delete
+    		return rawName;
+    	}
+    }
+
 }
+
 
